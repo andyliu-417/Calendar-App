@@ -1,34 +1,21 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
-import './Calendar.css';
-import moment from 'moment';
-import Header from '../Header/Header';
-import Body from '../Body/Body';
-import EventModal from '../EventModal/EventModal';
-import EventPanel from '../EventPanel/EventPanel';
 
-class Calendar extends Component {
+class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      date: null
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    this.setState({date: moment()});
+    this.setState({});
   }
 
   renderPC() {
     return (
-      <div className="calendar">
-        <Header></Header>
-        <Body></Body>
-        <EventModal></EventModal>
-        <EventPanel></EventPanel>
-
-
+      <div>
+          Header
       </div>
     );
   }
@@ -53,4 +40,4 @@ class Calendar extends Component {
   }
 }
 
-export default Calendar;
+export default Header;
