@@ -7,11 +7,8 @@ import {
   Divider,
   List
 } from 'antd';
-// import {connect} from 'react-redux'; import {getEvent} from
-// '../../redux/event.redux';
 import moment from 'moment';
 
-// @connect(state => state.event, {getEvent})
 class EventPanel extends Component {
 
   constructor(props) {
@@ -51,37 +48,28 @@ class EventPanel extends Component {
 
   }
   renderPC() {
-    const end = this
-      .props
-      .date
-      .endOf('month')
-      .format("YYYY-MM-DD");
-    const start = this
-      .props
-      .date
-      .startOf('month')
-      .format("YYYY-MM-DD");
-
     this.filterCurrentEvents()
 
     return (
       <div>
         {this.state.events.length>0 ? (
           <div> 
-            <Divider orientation="left">
-              <Icon type="schedule"/>
-              You have {this.state.events.length}
-              events to do this month
+            <Divider>
+              <Icon type="schedule"/>&nbsp;&nbsp;
+              You have {this.state.events.length} {this.state.events.length===1?(<span>to-do</span>):(<span>to-dos</span>)} this month
             </Divider>
             <List
+              size="large"
               bordered
               dataSource={this.state.events}
               renderItem={(v, i) => (
                 <List.Item>
                   <Row>
                     <Tag color="#5CC3BF">{i + 1}</Tag>
-                    <Icon type="clock-circle-o"/>
-                    {this.showEvent(v)}
+                    <Icon type="clock-circle-o"/>&nbsp;
+                    <span className="event-detail">
+                      {this.showEvent(v)}
+                      </span>
                   </Row>
                 </List.Item>
             )}/>  
@@ -89,8 +77,8 @@ class EventPanel extends Component {
         ):(
           <div> 
               <Divider>
-                <Icon type="schedule"/>
-                You do not have events to do this month
+                <Icon type="schedule"/>&nbsp;&nbsp;
+                You do not have to-dos this month
               </Divider>
           </div>
         )}
