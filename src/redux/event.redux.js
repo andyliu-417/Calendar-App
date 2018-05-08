@@ -6,6 +6,15 @@ const initState = {
 
 const ADD_EVENT = 'ADD_EVENT';
 const SAVE_EVENT = 'SAVE_EVENT';
+const GET_EVENT = 'GET_EVENT';
+
+export function getEvent() {
+  const eventList = JSON.parse(localStorage.getItem('eventList'));
+  return {
+    type: GET_EVENT,
+    payload: eventList || []
+  };
+}
 
 export function addEvent(event) {
   return {type: ADD_EVENT, payload: event};
@@ -26,10 +35,14 @@ export function event(state = initState, action) {
           .sort(compare())
       };
     case SAVE_EVENT:
-      console.log("save");
       localStorage.setItem('eventList', JSON.stringify(state.eventList));
       return {
         ...state
+      };
+    case GET_EVENT:
+      return {
+        ...state,
+        eventList: action.payload
       };
     default:
       return state;

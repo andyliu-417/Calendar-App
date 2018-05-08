@@ -75,7 +75,6 @@ class EventModal extends Component {
             placeholder="Event Name"
             value={this.state.name}
             onChange={(v) => this.setState({"name": v.target.value})}
-            // onChange={(v) => onChange({"name": v.target.value})}
             />
           <TimePicker
             id="timePicker"
@@ -84,7 +83,6 @@ class EventModal extends Component {
             format="HH:mm"
             value={this.state.time}
             onChange={(v) => this.setState({"time": v})}
-            // onChange={(v) => onChange({"time": v})}
             />
         </Input.Group>
       </Modal>
