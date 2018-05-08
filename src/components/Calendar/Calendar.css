@@ -71,6 +71,10 @@
     cursor: pointer;
 }
 
+.invalid {
+    color: #bdbdbd;
+}
+
 .weekNo {
     color: #bdbdbd;
 }
