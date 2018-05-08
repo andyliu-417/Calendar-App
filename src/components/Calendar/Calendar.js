@@ -28,8 +28,9 @@ class Calendar extends Component {
 
   componentDidMount() {
     this.setState({date: moment()});
-    this.props.getEvent();
-    // this.props.handleChange('date', moment());
+    this
+      .props
+      .getEvent();
   }
 
   renderPC() {
@@ -58,7 +59,8 @@ class Calendar extends Component {
           () => this.setState({showModal: false})
         } > </EventModal>}
 
-        {this.state.date != null && <EventPanel date={this.state.date} eventList={this.props.eventList}></EventPanel>}
+        {this.state.date != null && <EventPanel 
+        date={this.state.date} eventList={this.props.eventList}></EventPanel>}
       </div>
     );
   }

@@ -8,6 +8,7 @@ import {
   List
 } from 'antd';
 import moment from 'moment';
+import config from '../../config';
 
 class EventPanel extends Component {
 
@@ -30,7 +31,9 @@ class EventPanel extends Component {
 
     for (let i = 0; i < eventList.length; i++) {
       const event = eventList[i];
-      if (moment(`${event.datetime.years}-${event.datetime.months + 2}-${event.datetime.date} ${event.datetime.hours}:${event.datetime.minutes}`, "YYYY-MM-DD HH:mm").isBetween(start, end)) {
+      const eventMoment = moment(`${event.datetime.years}-${event.datetime.months + 2}-${event.datetime.date} ${event.datetime.hours}:${event.datetime.minutes}`, "YYYY-MM-DD HH:mm");
+      // if (moment(`${event.datetime.years}-${event.datetime.months + 2}-${event.datetime.date} ${event.datetime.hours}:${event.datetime.minutes}`, "YYYY-MM-DD HH:mm").isBetween(start, end)) {
+      if (eventMoment.isBetween(start, end)) {
         this
           .state
           .events
@@ -39,12 +42,15 @@ class EventPanel extends Component {
     }
   }
   showEvent(v) {
-    return (`${v.datetime.date} ${v.datetime.months + 2} ${v.datetime.years} ${v.datetime.hours < 10
-      ? "0" + v.datetime.hours
-      : v.datetime.hours}:${v.datetime.minutes < 10
-        ? "0" + v.datetime.minutes
-        : v.datetime.minutes}
-        - ${v.name}`);
+    return (
+      `${v.datetime.date < 10 ? "0" + v.datetime.date : v.datetime.date} 
+      ${config
+        .monthNames[v.datetime.months + 1]}
+       ${v.datetime.months + 2} ${v.datetime.years} 
+       ${v.datetime.hours < 10 ? "0" + v.datetime.hours : v.datetime.hours}:
+       ${v.datetime.minutes < 10 ? "0" + v.datetime.minutes : v.datetime.minutes} - 
+       ${v.name}`
+      );
 
   }
   renderPC() {

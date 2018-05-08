@@ -27,6 +27,7 @@ class EventModal extends Component {
 
     const datetime = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours()}:${time.minutes()}`, "YYYY-MM-DD HH:mm")
                     .toObject();
+    
     addEvent(
       {
         datetime,

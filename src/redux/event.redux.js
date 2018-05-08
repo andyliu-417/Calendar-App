@@ -1,4 +1,4 @@
-import compare from '../helpers/utils';
+import {compare} from '../helpers/utils';
 
 const initState = {
   eventList: []
