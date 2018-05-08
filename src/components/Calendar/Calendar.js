@@ -6,9 +6,9 @@ import Header from '../Header/Header';
 import Body from '../Body/Body';
 import EventModal from '../EventModal/EventModal';
 import EventPanel from '../EventPanel/EventPanel';
-import Wrapper from '../Wrapper/Wrapper';
+import imoocForm from '../Wrapper/Wrapper';
 
-@Wrapper
+@imoocForm
 class Calendar extends Component {
   constructor(props) {
     super(props)
@@ -16,15 +16,13 @@ class Calendar extends Component {
       'date': null
     };
   }
-  
+
   componentDidMount() {
     this.setState({date: moment()});
     // this.props.handleChange('date', moment());
-    // console.log(this.props.state);
   }
 
   renderPC() {
-    
     return (
       <div className="calendar">
         {this.state.date != null && <Header
@@ -35,7 +33,12 @@ class Calendar extends Component {
         }}
         ></Header>}
 
-        <Body></Body>
+        {this.state.date != null && <Body
+          date={this.state.date}
+        //   onClick={(el) => {
+        //   this.handlePick(el)
+        // }}
+        ></Body>}
 
         <EventModal></EventModal>
 
