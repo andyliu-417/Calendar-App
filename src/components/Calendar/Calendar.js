@@ -14,9 +14,13 @@ class Calendar extends Component {
     super(props)
     this.state = {
       date: null,
-      pickDate: moment(),
-      showModal: true,
+      pickDate: null,
+      showModal: false,
     };
+  }
+
+  handlePick = (el) => {
+    this.setState({pickDate: el.day, showModal: true});
   }
 
   componentDidMount() {
@@ -37,9 +41,9 @@ class Calendar extends Component {
 
         {this.state.date != null && <Body
           date={this.state.date}
-        //   onClick={(el) => {
-        //   this.handlePick(el)
-        // }}
+          onClick={(el) => {
+          this.handlePick(el)
+        }}
         ></Body>}
 
         {this.state.pickDate != null &&< EventModal
