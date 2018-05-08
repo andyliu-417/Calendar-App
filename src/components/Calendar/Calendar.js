@@ -13,7 +13,9 @@ class Calendar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      'date': null
+      date: null,
+      pickDate: moment(),
+      showModal: true,
     };
   }
 
@@ -40,7 +42,17 @@ class Calendar extends Component {
         // }}
         ></Body>}
 
-        <EventModal></EventModal>
+        {this.state.pickDate != null &&< EventModal
+          pickDate = {
+            this.state.pickDate
+          }
+          visible = {
+            this.state.showModal
+          }
+          onClose = {
+            () => this.setState({showModal: false})
+          }
+          > </EventModal>}
 
         <EventPanel></EventPanel>
       </div>
