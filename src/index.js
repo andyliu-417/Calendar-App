@@ -7,9 +7,20 @@ import registerServiceWorker from './helpers/registerServiceWorker';
 import enUS from 'antd/lib/locale-provider/en_US';
 import {LocaleProvider} from 'antd';
 
-ReactDOM.render((
-  <LocaleProvider locale={enUS}>
-    <App/>
-  </LocaleProvider>
-), document.getElementById('root'));
+import {createStore, compose} from 'redux';
+import {Provider} from 'react-redux';
+import reducers from './reducer';
+
+const store = createStore(reducers, compose(window.devToolsExtension
+    ? window.devToolsExtension()
+    : f => f))
+  ReactDOM.render((
+    <Provider store={store}>
+      <LocaleProvider locale={enUS}>
+        <App/>
+      </LocaleProvider>
+    </Provider>
+  
+  ), document.getElementById('root'));
+  
 registerServiceWorker();
