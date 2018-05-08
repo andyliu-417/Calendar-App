@@ -8,9 +8,11 @@ import {
   TimePicker,
   Icon
 } from 'antd';
+import {connect} from 'react-redux';
+import {addEvent} from '../../redux/event.redux';
 
+@connect(state => state.event, {addEvent})
 class EventModal extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -19,8 +21,21 @@ class EventModal extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({});
+  addEvent = () => {
+    const pickDate = this.props.pickDate;
+    const time = this.state.time;    
+
+    const datetime = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours()}:${time.minutes()}`, "YYYY-MM-DD HH:mm")
+                    .toObject();
+    this
+      .props
+      .addEvent(
+        {
+          datetime,
+          name: this.state.name
+        }
+      );
+    this.props.onClose();
   }
 
   renderPC() {
