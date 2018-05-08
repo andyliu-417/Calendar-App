@@ -7,7 +7,10 @@ import Body from '../Body/Body';
 import EventModal from '../EventModal/EventModal';
 import EventPanel from '../EventPanel/EventPanel';
 import imoocForm from '../Wrapper/Wrapper';
+import {connect} from 'react-redux';
+import {getEvent} from '../../redux/event.redux';
 
+@connect(state => state.event, {getEvent})
 @imoocForm
 class Calendar extends Component {
   constructor(props) {
@@ -25,6 +28,7 @@ class Calendar extends Component {
 
   componentDidMount() {
     this.setState({date: moment()});
+    this.props.getEvent();
     // this.props.handleChange('date', moment());
   }
 
@@ -54,7 +58,7 @@ class Calendar extends Component {
           () => this.setState({showModal: false})
         } > </EventModal>}
 
-        {this.state.date != null && <EventPanel date={this.state.date}></EventPanel>}
+        {this.state.date != null && <EventPanel date={this.state.date} eventList={this.props.eventList}></EventPanel>}
       </div>
     );
   }

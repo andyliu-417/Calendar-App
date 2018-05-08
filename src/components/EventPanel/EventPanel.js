@@ -1,23 +1,56 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
-import {Row, Col, Tag, Icon, Divider} from 'antd';
-import {connect} from 'react-redux';
-import {getEvent} from '../../redux/event.redux';
+import {
+  Row,
+  Tag,
+  Icon,
+  Divider,
+  List
+} from 'antd';
+// import {connect} from 'react-redux'; import {getEvent} from
+// '../../redux/event.redux';
 import moment from 'moment';
 
-@connect(state => state.event, {getEvent})
+// @connect(state => state.event, {getEvent})
 class EventPanel extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {events:[]};
+    this.state = {
+      events: []
+    };
   }
 
-  componentDidMount() {
-    this
-      .props
-      .getEvent();
-    
+  filterCurrentEvents() {
+    this.state.events = [];
+    const {date, eventList} = this.props;
+    const end = date
+      .endOf('month')
+      .format("YYYY-MM-DD");
+    const start = date
+      .startOf('month')
+      .format("YYYY-MM-DD");
+
+    for (let i = 0; i < eventList.length; i++) {
+      const event = eventList[i];
+      if (moment(`${event.datetime.years}-${event.datetime.months + 2}-${event.datetime.date} ${event.datetime.hours}:${event.datetime.minutes}`, "YYYY-MM-DD HH:mm").isBetween(start, end)) {
+        this
+          .state
+          .events
+          .push(event);
+      }
+    }
+  }
+  showEvent(v) {
+    return (`${v.datetime.date} ${v.datetime.months + 2} ${v.datetime.years} ${v.datetime.hours < 10
+      ? "0" + v.datetime.hours
+      : v.datetime.hours}:${v.datetime.minutes < 10
+        ? "0" + v.datetime.minutes
+        : v.datetime.minutes}
+        - ${v.name}`);
+
+  }
+  renderPC() {
     const end = this
       .props
       .date
@@ -29,63 +62,38 @@ class EventPanel extends Component {
       .startOf('month')
       .format("YYYY-MM-DD");
 
-    const events = this
-    .props
-    .eventList
-    .map(v => ((moment(`${v.datetime.years}-${v.datetime.months + 2}-${v.datetime.date} ${v.datetime.hours}:${v.datetime.minutes}`, "YYYY-MM-DD HH:mm").isBetween(start, end))
-      ? v : null));
+    this.filterCurrentEvents()
 
-    this.setState(events);
-  }
-
-  renderPC() {
-    // const end = this
-    //   .props
-    //   .date
-    //   .endOf('month')
-    //   .format("YYYY-MM-DD");
-    // const start = this
-    //   .props
-    //   .date
-    //   .startOf('month')
-    //   .format("YYYY-MM-DD");
-
-    const eventList = 
-    // this
-    //   .props
-    //   .eventList
-    this.state.events
-      .map(
-        (v, i) => (
-          // (moment(`${v.datetime.years}-${v.datetime.months + 2}-${v.datetime.date} ${v.datetime.hours}:${v.datetime.minutes}`, "YYYY-MM-DD HH:mm").isBetween(start, end))
-        // ? 
-        (
-          <div key={i}>
-            <Row className={"event-list-row"}>
-              <Col span={2}>
-                <Tag color="#5CC3BF">{i + 1}</Tag>
-              </Col>
-              <Col span={22}>
-                <Row>
-                  <Tag><Icon type="clock-circle-o"/> </Tag>
-                  {`${v.datetime.years}-${v.datetime.months+2}-${v.datetime.date} ${v.datetime.hours<10?"0"+v.datetime.hours:v.datetime.hours}:${v.datetime.minutes<10?"0"+v.datetime.minutes:v.datetime.minutes}`}
-                </Row>
-                <Row>{v.name}</Row>
-              </Col>
-            </Row>
-            <Divider/>
-          </div>
-        )
-        // : null)
-      ));
     return (
       <div>
-        <Divider orientation="left">
-          <Icon type="schedule"/>
-
-          Your Event List
-        </Divider>
-        {eventList}
+        {this.state.events.length>0 ? (
+          <div> 
+            <Divider orientation="left">
+              <Icon type="schedule"/>
+              You have {this.state.events.length}
+              events to do this month
+            </Divider>
+            <List
+              bordered
+              dataSource={this.state.events}
+              renderItem={(v, i) => (
+                <List.Item>
+                  <Row>
+                    <Tag color="#5CC3BF">{i + 1}</Tag>
+                    <Icon type="clock-circle-o"/>
+                    {this.showEvent(v)}
+                  </Row>
+                </List.Item>
+            )}/>  
+          </div>
+        ):(
+          <div> 
+              <Divider>
+                <Icon type="schedule"/>
+                You do not have events to do this month
+              </Divider>
+          </div>
+        )}
       </div>
     );
   }
