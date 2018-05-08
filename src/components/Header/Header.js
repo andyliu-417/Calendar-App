@@ -5,32 +5,17 @@ import config from '../../config';
 
 class Header extends Component {
   lastMonth = () => {
-    let date = this
-      .props
-      .date
-      .clone()
-      .subtract(1, 'months');
-    this
-      .props
-      .onChangeMonth(date);
-
+    let date = this.props.date.clone().subtract(1, 'months');
+    this.props.onChangeMonth(date);
   }
 
   nextMonth = () => {
-    let date = this
-      .props
-      .date
-      .clone()
-      .add(1, 'months');
-    this
-      .props
-      .onChangeMonth(date);
+    let date = this.props.date.clone().add(1, 'months');
+    this.props.onChangeMonth(date);
   }
 
   renderWeekRow() {
-    const weekRow = config
-      .weekDays
-      .map((v, i) => {
+    const weekRow = config.weekDays.map((v, i) => {
         if (i === 0) {
           return (
             <div key={v}>
@@ -92,12 +77,12 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <MediaQuery query="(min-device-width: 1224px)">
+        {/* <MediaQuery query="(min-device-width: 1224px)"> */}
           {this.renderPC()}
-        </MediaQuery>
-        <MediaQuery query="(max-device-width: 1224px)">
+        {/* </MediaQuery> */}
+        {/* <MediaQuery query="(max-device-width: 1224px)">
           {this.renderMB()}
-        </MediaQuery>
+        </MediaQuery> */}
       </div>
     );
   }

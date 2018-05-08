@@ -6,12 +6,10 @@ import Header from '../Header/Header';
 import Body from '../Body/Body';
 import EventModal from '../EventModal/EventModal';
 import EventPanel from '../EventPanel/EventPanel';
-import imoocForm from '../Wrapper/Wrapper';
 import {connect} from 'react-redux';
 import {getEvent} from '../../redux/event.redux';
 
 @connect(state => state.event, {getEvent})
-@imoocForm
 class Calendar extends Component {
   constructor(props) {
     super(props)
@@ -74,12 +72,12 @@ class Calendar extends Component {
   render() {
     return (
       <div>
-        <MediaQuery query="(min-device-width: 1224px)">
+        {/* <MediaQuery query="(min-device-width: 1224px)"> */}
           {this.renderPC()}
-        </MediaQuery>
-        <MediaQuery query="(max-device-width: 1224px)">
+        {/* </MediaQuery> */}
+        {/* <MediaQuery query="(max-device-width: 1224px)">
           {this.renderMB()}
-        </MediaQuery>
+        </MediaQuery> */}
       </div>
     );
   }

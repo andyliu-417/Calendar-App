@@ -114,12 +114,12 @@ class Body extends Component {
   render() {
     return (
       <div>
-        <MediaQuery query="(min-device-width: 1224px)">
+        {/* <MediaQuery query="(min-device-width: 1224px)"> */}
           {this.renderPC()}
-        </MediaQuery>
-        <MediaQuery query="(max-device-width: 1224px)">
+        {/* </MediaQuery> */}
+        {/* <MediaQuery query="(max-device-width: 1224px)">
           {this.renderMB()}
-        </MediaQuery>
+        </MediaQuery> */}
       </div>
     );
   }

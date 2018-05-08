@@ -8,6 +8,8 @@ import {
   TimePicker,
   Icon
 } from 'antd';
+import {Modal as MModal, List, Button as MButton, DatePicker, InputItem} from 'antd-mobile';
+
 import {connect} from 'react-redux';
 import {addEvent, saveEvent} from '../../redux/event.redux';
 
@@ -25,7 +27,7 @@ class EventModal extends Component {
     const {pickDate, addEvent, saveEvent, onClose} = this.props;
     const time = this.state.time;    
 
-    const datetime = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours()}:${time.minutes()}`, "YYYY-MM-DD HH:mm")
+    const datetime = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours}:${time.minutes}`, "YYYY-MM-DD HH:mm")
                     .toObject();
     
     addEvent(
@@ -90,7 +92,34 @@ class EventModal extends Component {
 
   renderMB() {
     return (
-      <div></div>
+      <MModal
+        popup
+        closable="true"
+        visible={this.props.visible}
+        onClose={this.props.onClose}
+        animationType="slide-up">
+        <List renderHeader={() => <div>{this.props.pickDate.format("YYYY-MM-DD")}</div>} className="popup-list">
+          <List.Item>
+            <DatePicker
+              mode="time"
+              format="HH:mm"
+              value={this.state.time}
+              onChange={(v) => this.setState({"time": v})}>
+              <List.Item arrow="horizontal">Event Time</List.Item>
+            </DatePicker>
+          </List.Item>
+          <List.Item>
+            <InputItem
+              placeholder="Event Name"
+              value={this.state.name}
+              onChange={(v) => this.setState({"name": v})}></InputItem>
+          </List.Item>
+
+          <List.Item >
+            <MButton style={{"backgroundColor":"#5CC3BF","color":"white"}} onClick={this.handleSave}>Save</MButton>
+          </List.Item>
+        </List>
+      </MModal>
     );
   }
 
