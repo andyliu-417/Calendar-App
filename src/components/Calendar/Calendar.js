@@ -15,7 +15,7 @@ class Calendar extends Component {
     this.state = {
       date: null,
       pickDate: null,
-      showModal: false,
+      showModal: false
     };
   }
 
@@ -33,32 +33,28 @@ class Calendar extends Component {
       <div className="calendar">
         {this.state.date != null && <Header
           date={this.state.date}
-          // onChangeMonth={this.props.handleChange}
           onChangeMonth={(v) => {
           this.setState({'date': v})
-        }}
-        ></Header>}
+        }}></Header>}
 
         {this.state.date != null && <Body
           date={this.state.date}
           onClick={(el) => {
           this.handlePick(el)
-        }}
-        ></Body>}
+        }}></Body>}
 
         {this.state.pickDate != null &&< EventModal
-          pickDate = {
-            this.state.pickDate
-          }
-          visible = {
-            this.state.showModal
-          }
-          onClose = {
-            () => this.setState({showModal: false})
-          }
-          > </EventModal>}
+        pickDate = {
+          this.state.pickDate
+        }
+        visible = {
+          this.state.showModal
+        }
+        onClose = {
+          () => this.setState({showModal: false})
+        } > </EventModal>}
 
-        <EventPanel></EventPanel>
+        {this.state.date != null && <EventPanel date={this.state.date}></EventPanel>}
       </div>
     );
   }
