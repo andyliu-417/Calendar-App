@@ -41,7 +41,7 @@ class EventModal extends Component {
     onClose();
   }
 
-  handleSave = () => {
+  handleCancel = () => {
     this.clear();
 
     this.props.onClose();
