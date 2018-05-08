@@ -23,12 +23,13 @@ class Calendar extends Component {
   renderPC() {
     return (
       <div className="calendar">
-        <Header></Header>
+        {this.state.date != null && <Header date={this.state.date}></Header>}
+
         <Body></Body>
+
         <EventModal></EventModal>
+
         <EventPanel></EventPanel>
-
-
       </div>
     );
   }

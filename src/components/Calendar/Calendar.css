@@ -2,3 +2,27 @@
     width: 72%;
     margin: 0 auto;
 }
+
+/* header */
+.calendar-header-row {
+    padding: 8px 0;
+    background-color: #5CC3BF;
+}
+
+.calendar-title {
+    color: white;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.left-btn {
+    border-color: #5CC3BF;
+    position: absolute;
+    left: 0
+  }
+
+.right-btn {
+    border-color: #5CC3BF;
+    position: absolute;
+    right: 0
+}

@@ -3,8 +3,11 @@
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
+  /* animation: App-logo-spin infinite 20s linear; */
   height: 80px;
+  width: auto;  
+  max-width: 100%;  
+  max-height: 100%;
 }
 
 .App-header {
@@ -15,7 +18,9 @@
 }
 
 .App-title {
+  margin-top: 12px;  
   font-size: 1.5em;
+  color: white;
 }
 
 .App-intro {

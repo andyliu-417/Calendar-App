@@ -1,21 +1,47 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
+import {Row, Col, Button} from 'antd';
 
 class Header extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {};
+  lastMonth = () => {
+    let date = this
+      .props
+      .date
+      .clone()
+      .subtract(1, 'months');
+    
   }
 
-  componentDidMount() {
-    this.setState({});
+  nextMonth = () => {
+    let date = this
+      .props
+      .date
+      .clone()
+      .add(1, 'months');
+   
   }
 
   renderPC() {
     return (
       <div>
-          Header
+        <Row className="calendar-header-row">
+          <Col span={3}>
+            <Button ghost icon="double-left" className="left-btn" onClick={this.lastMonth}></Button >
+          </Col>
+          < Col span={18} className="calendar-title">
+            {this
+              .props
+              .date
+              .format('YYYY - MMMM')}
+          </Col>
+          <Col span={3}>
+            <Button
+              ghost
+              icon="double-right"
+              className="right-btn"
+              onClick={this.nextMonth}></Button >
+          </Col>
+        </Row>
       </div>
     );
   }
