@@ -21,23 +21,31 @@ class EventModal extends Component {
     };
   }
 
-  addEvent = () => {
-    const pickDate = this.props.pickDate;
+  handleClick = () => {
+    const {pickDate, addEvent, saveEvent, onClose} = this.props;
     const time = this.state.time;    
 
     const datetime = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours()}:${time.minutes()}`, "YYYY-MM-DD HH:mm")
                     .toObject();
-    this
-      .props
-      .addEvent(
-        {
-          datetime,
-          name: this.state.name
-        }
-      );
+    addEvent(
+      {
+        datetime,
+        name: this.state.name
+      }
+    );
 
-    this.props.saveEvent();
-    this.props.onClose();
+    saveEvent();
+    
+    this.clear();
+
+    onClose();
+  }
+
+  clear() {
+    this.setState({
+                    name: "",
+                    time: null
+                  });
   }
 
   renderPC() {
@@ -50,20 +58,25 @@ class EventModal extends Component {
         onCancel={onClose}
         footer={[
           <Button key="cancel" onClick ={onClose}> <Icon type="close" /> </Button>,
-          <Button key="save" onClick={this.addEvent}> <Icon type="check" /> </Button >
+          <Button key="save" onClick={this.handleClick}> <Icon type="check" /> </Button >
         ]}>
         <Input.Group compact>
           <Input
+            id="nameInput"
             style={{
             width: "72%"
           }}
             placeholder="Event Name"
+            value={this.state.name}
             onChange={(v) => this.setState({"name": v.target.value})}
             // onChange={(v) => onChange({"name": v.target.value})}
             />
           <TimePicker
+            id="timePicker"
+            minuteStep={10}
             defaultOpenValue={moment("00:00", "HH:mm")}
             format="HH:mm"
+            value={this.state.time}
             onChange={(v) => this.setState({"time": v})}
             // onChange={(v) => onChange({"time": v})}
             />
