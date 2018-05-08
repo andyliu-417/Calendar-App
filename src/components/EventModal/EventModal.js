@@ -21,7 +21,7 @@ class EventModal extends Component {
     };
   }
 
-  handleClick = () => {
+  handleSave = () => {
     const {pickDate, addEvent, saveEvent, onClose} = this.props;
     const time = this.state.time;    
 
@@ -41,6 +41,12 @@ class EventModal extends Component {
     onClose();
   }
 
+  handleSave = () => {
+    this.clear();
+
+    this.props.onClose();
+  }
+
   clear() {
     this.setState({
                     name: "",
@@ -57,8 +63,8 @@ class EventModal extends Component {
         visible={visible}
         onCancel={onClose}
         footer={[
-          <Button key="cancel" onClick ={onClose}> <Icon type="close" /> </Button>,
-          <Button key="save" onClick={this.handleClick}> <Icon type="check" /> </Button >
+          <Button key="cancel" onClick ={this.handleCancel}> <Icon type="close" /> </Button>,
+          <Button key="save" onClick={this.handleSave}> <Icon type="check" /> </Button >
         ]}>
         <Input.Group compact>
           <Input
