@@ -10,6 +10,9 @@ class Header extends Component {
       .date
       .clone()
       .subtract(1, 'months');
+    this
+      .props
+      .onChangeMonth(date);
 
   }
 
@@ -19,7 +22,9 @@ class Header extends Component {
       .date
       .clone()
       .add(1, 'months');
-
+    this
+      .props
+      .onChangeMonth(date);
   }
 
   renderWeekRow() {

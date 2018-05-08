@@ -6,24 +6,34 @@ import Header from '../Header/Header';
 import Body from '../Body/Body';
 import EventModal from '../EventModal/EventModal';
 import EventPanel from '../EventPanel/EventPanel';
+import Wrapper from '../Wrapper/Wrapper';
 
+@Wrapper
 class Calendar extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      date: null
+      'date': null
     };
   }
-
+  
   componentDidMount() {
     this.setState({date: moment()});
+    // this.props.handleChange('date', moment());
+    // console.log(this.props.state);
   }
 
   renderPC() {
+    
     return (
       <div className="calendar">
-        {this.state.date != null && <Header date={this.state.date}></Header>}
+        {this.state.date != null && <Header
+          date={this.state.date}
+          // onChangeMonth={this.props.handleChange}
+          onChangeMonth={(v) => {
+          this.setState({'date': v})
+        }}
+        ></Header>}
 
         <Body></Body>
 
