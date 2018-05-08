@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
 import {Row, Col, Button} from 'antd';
+import config from '../../config';
 
 class Header extends Component {
   lastMonth = () => {
@@ -9,7 +10,7 @@ class Header extends Component {
       .date
       .clone()
       .subtract(1, 'months');
-    
+
   }
 
   nextMonth = () => {
@@ -18,7 +19,36 @@ class Header extends Component {
       .date
       .clone()
       .add(1, 'months');
-   
+
+  }
+
+  renderWeekRow() {
+    const weekRow = config
+      .weekDays
+      .map((v, i) => {
+        if (i === 0) {
+          return (
+            <div key={v}>
+              <Col
+                className="calendar-row-week-format first"
+                style={{
+                color: "#fff"
+              }}
+                span={3}>.</Col>
+              <Col className="calendar-row-week-format" span={3}>{v}</Col>
+            </div>
+          );
+        } else {
+          return (
+            <Col className="calendar-row-week-format" key={v} span={3}>{v}</Col>
+          );
+        }
+      })
+    return (
+      <Row>
+        {weekRow}
+      </Row>
+    );
   }
 
   renderPC() {
@@ -42,6 +72,8 @@ class Header extends Component {
               onClick={this.nextMonth}></Button >
           </Col>
         </Row>
+
+        {this.renderWeekRow()}
       </div>
     );
   }
