@@ -33,7 +33,6 @@ class Calendar extends Component {
 
   renderCalendar(mq) {
     return (
-      // <div style={{"width": width+"%", "margin": "0 auto"}}>
       <div className={"calendar-"+mq}>
       
         {this.state.date != null && <Header

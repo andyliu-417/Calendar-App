@@ -12,6 +12,7 @@ import {Modal as MModal, List, Button as MButton, DatePicker, InputItem} from 'a
 
 import {connect} from 'react-redux';
 import {addEvent, saveEvent} from '../../redux/event.redux';
+import PropTypes from 'prop-types';
 
 @connect(state => state.event, {addEvent, saveEvent})
 class EventModal extends Component {
@@ -21,6 +22,12 @@ class EventModal extends Component {
       name: "",
       time: null,
     };
+  }
+
+  static propTypes = {
+    pickDate: PropTypes.object.isRequired,
+    visible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
   }
 
   handleSave = () => {

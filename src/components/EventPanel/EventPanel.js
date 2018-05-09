@@ -12,6 +12,7 @@ import { WingBlank, WhiteSpace, Card } from 'antd-mobile';
 
 import moment from 'moment';
 import config from '../../config';
+import PropTypes from 'prop-types';
 
 class EventPanel extends Component {
 
@@ -20,6 +21,11 @@ class EventPanel extends Component {
     this.state = {
       events: []
     };
+  }
+
+  static propTypes = {
+    date: PropTypes.object.isRequired,
+    eventList: PropTypes.array.isRequired,
   }
 
   filterCurrentEvents() {

@@ -2,8 +2,14 @@ import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
 import {Row, Col, Button} from 'antd';
 import config from '../../config';
+import PropTypes from 'prop-types'
 
 class Header extends Component {
+  static propTypes = {
+    date: PropTypes.object.isRequired,
+    onChangeMonth: PropTypes.func.isRequired
+  }
+  
   lastMonth = () => {
     let date = this.props.date.clone().subtract(1, 'months');
     this.props.onChangeMonth(date);
