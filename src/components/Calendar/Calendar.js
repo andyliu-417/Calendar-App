@@ -12,6 +12,8 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {getEvent} from '../../redux/event.redux';
 
+import config from '../../config';
+
 @connect(state => state.event, {getEvent})
 class Calendar extends Component {
   constructor(props) {
@@ -71,10 +73,10 @@ class Calendar extends Component {
     return (
       <div>
         <MediaQuery query="(min-device-width: 1224px)">
-          {this.renderCalendar("pc")}
+          {this.renderCalendar(config.plateform.PC)}
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderCalendar("mb")}
+          {this.renderCalendar(config.plateform.MB)}
         </MediaQuery>
       </div>
     );

@@ -9,6 +9,7 @@ import {addEvent, saveEvent} from '../../redux/event.redux';
 import PropTypes from 'prop-types';
 import moment from "moment";
 
+import config from '../../config';
 
 @connect(state => state.event, {addEvent, saveEvent})
 class EventModal extends Component {
@@ -26,16 +27,15 @@ class EventModal extends Component {
     onClose: PropTypes.func.isRequired
   }
 
-  handleSave = (e) => {
-    if ((this.state.time === null) || (this.state.name === "")){
-      this.showError(e)
-      return;
-    }
-    
+  save(mq) {
     const {pickDate, addEvent, saveEvent, onClose} = this.props;
-    const time = this.state.time;    
-  
-    const m = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours}:${time.minutes}`, "YYYY-MM-DD HH:mm");
+    const time = this.state.time; 
+    let m;
+    if (mq === config.plateform.MB) {
+        m = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.getHours()}:${time.getMinutes()}`, "YYYY-MM-DD HH:mm");
+    } else {
+        m = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours()}:${time.minutes()}`, "YYYY-MM-DD HH:mm");
+    }   
     const datetime = m.toObject();
     
     addEvent(
@@ -49,26 +49,42 @@ class EventModal extends Component {
     
     this.clear();
     onClose();
-
-    this.showNotification(e);
   }
 
-  showNotification(e) {
+  handleSavePC = () => {
+    if ((this.state.time === null) || (this.state.name === "")){
+      this.showError(config.plateform.PC)
+      return;
+    }
+    this.save(config.plateform.PC);
+    this.showNotification(config.plateform.PC);
+  }
+
+  handleSaveMB = () => {
+    if ((this.state.time === null) || (this.state.name === "")){
+      this.showError(config.plateform.MB)
+      return;
+    }
+    this.save(config.plateform.MB);
+    this.showNotification(config.plateform.MB);
+  }
+
+  showNotification(mq) {
     const msg = 'Add Event Successfully.';
-    if (e.target.text === "Save") {
+    if (mq === config.plateform.MB) {
       Toast.success(msg, 1);
     } else {
       notification['success']({
         message: msg,
         description: 'You add an event on ' + this.props.pickDate.format("YYYY-MMMM-DD") + '.',
-        duration: 3
+        duration: 10
       });
     }
   }
 
-  showError(e) {
+  showError(mq) {
     const msg = 'Please select time and set name!';
-    if (e.target.text === "Save") {
+    if (mq === config.plateform.MB) {
       Toast.fail(msg, 1);
     } else {
       notification['error']({
@@ -100,11 +116,10 @@ class EventModal extends Component {
         onCancel={onClose}
         footer={[
           <Button key="cancel" onClick ={this.handleCancel}> <Icon type="close" /> </Button>,
-          <Button key="save" onClick={this.handleSave}> <Icon type="check" /> </Button >
+          <Button key="save" onClick={this.handleSavePC}> <Icon type="check" /> </Button >
         ]}>
         <Input.Group compact>
           <Input
-            id="nameInput"
             style={{
             width: "72%"
           }}
@@ -149,7 +164,7 @@ class EventModal extends Component {
           </List.Item>
 
           <List.Item >
-            <MButton style={{"backgroundColor":"#5CC3BF","color":"white"}} onClick={this.handleSave}>Save</MButton>
+            <MButton style={{"backgroundColor":"#5CC3BF","color":"white"}} onClick={this.handleSaveMB}>Save</MButton>
           </List.Item>
         </List>
       </MModal>

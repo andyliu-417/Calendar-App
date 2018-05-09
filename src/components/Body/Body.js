@@ -5,6 +5,8 @@ import {Row, Col} from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
+import config from '../../config';
+
 class Body extends Component {
   static propTypes = {
     date: PropTypes.object.isRequired,
@@ -115,10 +117,10 @@ class Body extends Component {
     return (
       <div>
         <MediaQuery query="(min-device-width: 1224px)">
-          {this.renderBody("pc")}
+          {this.renderBody(config.plateform.PC)}
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderBody("mb")}
+          {this.renderBody(config.plateform.MB)}
         </MediaQuery>
       </div>
     );

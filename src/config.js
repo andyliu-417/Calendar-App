@@ -22,5 +22,9 @@ export default {
     "October",
     "November",
     "December"
-  ]
+  ],
+  "plateform": {
+    PC: "pc",
+    MB: "mb"
+  }
 }

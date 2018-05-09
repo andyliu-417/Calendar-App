@@ -78,10 +78,10 @@ class Header extends Component {
     return (
       <div>
         <MediaQuery query="(min-device-width: 1224px)">
-          {this.renderHeader("pc")}
+          {this.renderHeader(config.plateform.PC)}
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderHeader("mb")}
+          {this.renderHeader(config.plateform.MB)}
         </MediaQuery>
       </div>
     );
