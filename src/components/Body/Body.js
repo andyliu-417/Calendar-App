@@ -5,7 +5,7 @@ import {Row, Col} from 'antd';
 
 class Body extends Component {
 
-  getAllDays() {
+  getAllDays(mq) {
     const date = this.props.date;
     const start = date.startOf('month');
     const offset = start.weekday();
@@ -15,7 +15,7 @@ class Body extends Component {
       const day = start
         .clone()
         .subtract(offset - i, 'days');
-      lastDays.push({day, className: 'invalid calendar-row-format'});
+      lastDays.push({day, className: 'invalid calendar-row-format-'+mq});
     }
 
     const currentDays = [];
@@ -28,8 +28,8 @@ class Body extends Component {
       currentDays.push({
         day,
         className: (day.isSame(moment(), 'day'))
-          ? 'current calendar-row-format'
-          : 'valid calendar-row-format'
+          ? 'current calendar-row-format-'+mq
+          : 'valid calendar-row-format-'+mq
       });
     }
 
@@ -41,7 +41,7 @@ class Body extends Component {
         .day
         .clone()
         .add(i, 'days');
-      nextDays.push({day, className: 'invalid calendar-row-format'});
+      nextDays.push({day, className: 'invalid calendar-row-format-'+mq});
       i += 1;
     }
 
@@ -53,7 +53,7 @@ class Body extends Component {
 
   }
 
-  renderDayPC(el) {
+  renderDay(el) {
     return (
       <Col
         span={3}
@@ -70,17 +70,17 @@ class Body extends Component {
     );
   }
 
-  renderDaysPC(days) {
+  renderDays(mq, days) {
     let weekNo = 1;
 
     return days.map((v, i) => {
       if (i === (weekNo - 1) * 7) {
         return (
           <div className="calendar-day-rows" key={i}>
-            <Col className="calendar-row-format first" span={3}>
+            <Col className={"first calendar-row-format-"+mq} span={3}>
               <span className="weekNo">W{weekNo}</span>
             </Col>
-            {this.renderDayPC(v)}
+            {this.renderDay(v)}
           </div>
         );
       } else {
@@ -89,37 +89,31 @@ class Body extends Component {
         }
         return (
           <div key={i}>
-            {this.renderDayPC(v)}
+            {this.renderDay(v)}
           </div>
         );
       }
     });
   }
 
-  renderPC() {
-    const days = this.getAllDays();
+  renderBody(mq) {
+    const days = this.getAllDays(mq);
     return (
       <Row>
-        {this.renderDaysPC(days)}
+        {this.renderDays(mq, days)}
       </Row>
-    );
-  }
-
-  renderMB() {
-    return (
-      <div></div>
     );
   }
 
   render() {
     return (
       <div>
-        {/* <MediaQuery query="(min-device-width: 1224px)"> */}
-          {this.renderPC()}
-        {/* </MediaQuery> */}
-        {/* <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderMB()}
-        </MediaQuery> */}
+        <MediaQuery query="(min-device-width: 1224px)">
+          {this.renderBody("pc")}
+        </MediaQuery>
+        <MediaQuery query="(max-device-width: 1224px)">
+          {this.renderBody("mb")}
+        </MediaQuery>
       </div>
     );
   }

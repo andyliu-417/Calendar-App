@@ -14,23 +14,23 @@ class Header extends Component {
     this.props.onChangeMonth(date);
   }
 
-  renderWeekRow() {
+  renderWeekRow(mq) {
     const weekRow = config.weekDays.map((v, i) => {
         if (i === 0) {
           return (
             <div key={v}>
               <Col
-                className="calendar-row-week-format first"
+                className={"first calendar-row-week-format-"+mq}
                 style={{
                 color: "#fff"
               }}
                 span={3}>.</Col>
-              <Col className="calendar-row-week-format" span={3}>{v}</Col>
+              <Col className={"calendar-row-week-format-"+mq} span={3}>{v}</Col>
             </div>
           );
         } else {
           return (
-            <Col className="calendar-row-week-format" key={v} span={3}>{v}</Col>
+            <Col className={"calendar-row-week-format-"+mq} key={v} span={3}>{v}</Col>
           );
         }
       })
@@ -41,7 +41,7 @@ class Header extends Component {
     );
   }
 
-  renderPC() {
+  renderHeader(mq) {
     return (
       <div>
         <Row className="calendar-header-row">
@@ -63,26 +63,20 @@ class Header extends Component {
           </Col>
         </Row>
 
-        {this.renderWeekRow()}
+        {this.renderWeekRow(mq)}
       </div>
-    );
-  }
-
-  renderMB() {
-    return (
-      <div></div>
     );
   }
 
   render() {
     return (
       <div>
-        {/* <MediaQuery query="(min-device-width: 1224px)"> */}
-          {this.renderPC()}
-        {/* </MediaQuery> */}
-        {/* <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderMB()}
-        </MediaQuery> */}
+        <MediaQuery query="(min-device-width: 1224px)">
+          {this.renderHeader("pc")}
+        </MediaQuery>
+        <MediaQuery query="(max-device-width: 1224px)">
+          {this.renderHeader("mb")}
+        </MediaQuery>
       </div>
     );
   }

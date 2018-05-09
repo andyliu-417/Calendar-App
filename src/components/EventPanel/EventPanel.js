@@ -8,7 +8,7 @@ import {
   List,
   Badge
 } from 'antd';
-import { WingBlank } from 'antd-mobile';
+import { WingBlank, WhiteSpace, Card } from 'antd-mobile';
 
 import moment from 'moment';
 import config from '../../config';
@@ -99,35 +99,37 @@ class EventPanel extends Component {
 
     return (
       <WingBlank>
+        <WhiteSpace></WhiteSpace>
+
         {this.state.events.length>0 ? (
           <div> 
-            <Divider>
-              <Icon type="schedule"/>&nbsp;&nbsp;
-              You have &nbsp;<Badge count={this.state.events.length} style={{ backgroundColor: '#5CC3BF' }}/> &nbsp;
-              {this.state.events.length===1?(<span>to-do</span>):(<span>to-dos</span>)} this month
-            </Divider>
-            <List
-              size="large"
-              bordered
-              dataSource={this.state.events}
-              renderItem={(v, i) => (
-                <List.Item>
-                  <Row>
-                    <Tag color="#5CC3BF">{i + 1}</Tag>
-                    <Icon type="clock-circle-o"/>&nbsp;
-                    <span className="event-detail">
-                      {this.showEvent(v)}
-                      </span>
-                  </Row>
-                </List.Item>
-            )}/>  
+            <Icon type="schedule"/>&nbsp;&nbsp;
+            You have &nbsp;<Badge count={this.state.events.length} style={{ backgroundColor: '#5CC3BF' }}/> &nbsp;
+            {this.state.events.length===1?(<span>to-do</span>):(<span>to-dos</span>)} this month
+            <WhiteSpace></WhiteSpace>
+            
+            {this.state.events.map((v,i) => (
+              <Card key={i}>
+                <Card.Header
+                  title={`${v.datetime.date < 10 ? "0" + v.datetime.date : v.datetime.date} 
+                  -${config.monthNames[v.datetime.months + 1]}
+                  -${v.datetime.years} `}
+                  extra={<span> {
+                    `${v.datetime.hours < 10 ? "0" + v.datetime.hours : v.datetime.hours} :
+                    ${v.datetime.minutes < 10 ? "0" + v.datetime.minutes : v.datetime.minutes}`
+                } </span>}></Card.Header>
+                <Card.Body>
+                  <span>{v.name}</span>
+                </Card.Body>
+              </Card>
+            ))}
           </div>
         ):(
           <div> 
-              <Divider>
-                <Icon type="schedule"/>&nbsp;&nbsp;
-                You do not have to-dos this month
-              </Divider>
+              <Icon type="schedule"/>&nbsp;&nbsp;
+              You do not have to-dos this month
+              <WhiteSpace></WhiteSpace>
+              
           </div>
         )}
       </WingBlank>

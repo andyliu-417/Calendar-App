@@ -1,8 +1,12 @@
-.calendar {
+.calendar-pc {
     width: 72%;
     margin: 0 auto;
 }
 
+.calendar-mb {
+    width: 100%;
+    margin: 0 auto;
+}
 /* header */
 .calendar-header-row {
     padding: 8px 0;
@@ -28,7 +32,7 @@
 }
 
 /* week header format */
-.calendar-row-week-format {
+.calendar-row-week-format-pc {
     padding: 30px 0;
     border-bottom: 1px solid #d5d5d5;
     border-right: 1px solid #d5d5d5;
@@ -37,12 +41,25 @@
     background-color: #fcfcfc;
 }
 
-.calendar-row-week-format.first {
+.calendar-row-week-format-mb {
+    padding: 10px 0;
+    border-bottom: 1px solid #d5d5d5;
+    border-right: 1px solid #d5d5d5;
+    border-top: 1px solid #d5d5d5;
+    line-height: 100%;
+    background-color: #fcfcfc;
+}
+
+.calendar-row-week-format-mb.first {
+    border-left: 1px solid #d5d5d5;
+}
+
+.calendar-row-week-format-pc.first {
     border-left: 1px solid #d5d5d5;
 }
 
 /* body format */
-.calendar-row-format {
+.calendar-row-format-pc {
     padding: 30px 0;
     border-bottom: 1px solid #d5d5d5;
     border-right: 1px solid #d5d5d5;
@@ -51,22 +68,51 @@
     top: 0px;
 }
 
-.calendar-row-format.first {
+.calendar-row-format-mb {
+    padding: 20px 0;
+    border-bottom: 1px solid #d5d5d5;
+    border-right: 1px solid #d5d5d5;
+    border-top: none;
+    line-height: 100%;
+    top: 0px;
+}
+
+.calendar-row-format-mb.first {
     border-left: 1px solid #d5d5d5;
     background-color: #fcfcfc;
 }
 
-.calendar-row-format.current {
+.calendar-row-format-pc.first {
+    border-left: 1px solid #d5d5d5;
+    background-color: #fcfcfc;
+}
+
+.calendar-row-format-mb.current {
     color: #fff;
     background-color: #5CC3BF;
 }
 
-.calendar-row-format.first:hover {
+.calendar-row-format-pc.current {
+    color: #fff;
+    background-color: #5CC3BF;
+}
+
+.calendar-row-format-mb.first:hover {
     background-color: #fcfcfc;
     cursor: default;
 }
 
-.calendar-row-format:hover {
+.calendar-row-format-pc.first:hover {
+    background-color: #fcfcfc;
+    cursor: default;
+}
+
+.calendar-row-format-mb:hover {
+    background-color: #ababab;
+    cursor: pointer;
+}
+
+.calendar-row-format-pc:hover {
     background-color: #ababab;
     cursor: pointer;
 }

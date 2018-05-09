@@ -31,9 +31,11 @@ class Calendar extends Component {
       .getEvent();
   }
 
-  renderPC() {
+  renderCalendar(mq) {
     return (
-      <div className="calendar">
+      // <div style={{"width": width+"%", "margin": "0 auto"}}>
+      <div className={"calendar-"+mq}>
+      
         {this.state.date != null && <Header
           date={this.state.date}
           onChangeMonth={(v) => {
@@ -63,21 +65,15 @@ class Calendar extends Component {
     );
   }
 
-  renderMB() {
-    return (
-      <div></div>
-    );
-  }
-
   render() {
     return (
       <div>
-        {/* <MediaQuery query="(min-device-width: 1224px)"> */}
-          {this.renderPC()}
-        {/* </MediaQuery> */}
-        {/* <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderMB()}
-        </MediaQuery> */}
+        <MediaQuery query="(min-device-width: 1224px)">
+          {this.renderCalendar("pc")}
+        </MediaQuery>
+        <MediaQuery query="(max-device-width: 1224px)">
+          {this.renderCalendar("mb")}
+        </MediaQuery>
       </div>
     );
   }
