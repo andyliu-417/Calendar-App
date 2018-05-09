@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
 import {Row, Col, Button} from 'antd';
+
+import PropTypes from 'prop-types';
 import config from '../../config';
-import PropTypes from 'prop-types'
 
 class Header extends Component {
   static propTypes = {
@@ -29,8 +30,7 @@ class Header extends Component {
                 className={"first calendar-row-week-format-"+mq}
                 style={{
                 color: "#fff"
-              }}
-                span={3}>.</Col>
+              }}span={3}>.</Col>
               <Col className={"calendar-row-week-format-"+mq} span={3}>{v}</Col>
             </div>
           );

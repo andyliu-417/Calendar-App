@@ -1,18 +1,11 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
-import {
-  Row,
-  Tag,
-  Icon,
-  Divider,
-  List,
-  Badge
-} from 'antd';
-import { WingBlank, WhiteSpace, Card } from 'antd-mobile';
+import {Row, Tag, Icon, Divider, List, Badge} from 'antd';
+import {WingBlank, WhiteSpace, Card} from 'antd-mobile';
 
 import moment from 'moment';
-import config from '../../config';
 import PropTypes from 'prop-types';
+import config from '../../config';
 
 class EventPanel extends Component {
 
@@ -84,7 +77,7 @@ class EventPanel extends Component {
                     <Icon type="clock-circle-o"/>&nbsp;
                     <span className="event-detail">
                       {this.showEvent(v)}
-                      </span>
+                    </span>
                   </Row>
                 </List.Item>
             )}/>  
@@ -135,10 +128,10 @@ class EventPanel extends Component {
           <div> 
               <Icon type="schedule"/>&nbsp;&nbsp;
               You do not have to-dos this month
-              <WhiteSpace></WhiteSpace>
-              
           </div>
         )}
+      <WhiteSpace></WhiteSpace>
+        
       </WingBlank>
     );
   }

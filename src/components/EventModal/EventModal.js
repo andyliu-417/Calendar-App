@@ -1,18 +1,14 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
-import moment from "moment";
-import {
-  Modal,
-  Button,
-  Input,
-  TimePicker,
-  Icon
-} from 'antd';
+import {Modal, Button, Input, TimePicker, Icon} from 'antd';
 import {Modal as MModal, List, Button as MButton, DatePicker, InputItem} from 'antd-mobile';
 
 import {connect} from 'react-redux';
 import {addEvent, saveEvent} from '../../redux/event.redux';
+
 import PropTypes from 'prop-types';
+import moment from "moment";
+
 
 @connect(state => state.event, {addEvent, saveEvent})
 class EventModal extends Component {

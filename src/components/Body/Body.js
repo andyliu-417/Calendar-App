@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
-import moment from 'moment';
 import {Row, Col} from 'antd';
-import PropTypes from 'prop-types'
+
+import moment from 'moment';
+import PropTypes from 'prop-types';
 
 class Body extends Component {
   static propTypes = {

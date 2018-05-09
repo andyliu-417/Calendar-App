@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
 import './Calendar.css';
-import moment from 'moment';
+
 import Header from '../Header/Header';
 import Body from '../Body/Body';
 import EventModal from '../EventModal/EventModal';
 import EventPanel from '../EventPanel/EventPanel';
+
+import moment from 'moment';
+
 import {connect} from 'react-redux';
 import {getEvent} from '../../redux/event.redux';
 
