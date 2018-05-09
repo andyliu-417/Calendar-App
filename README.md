@@ -75,7 +75,15 @@ The app allows users to create events for any date and see already created event
 
   
 
+
+
+## Architecture
+<img src="https://github.com/Jjunxi/Calendar-App/blob/master/screenshots/IMG_2033.jpg?raw=true" />
+<img src="https://github.com/Jjunxi/Calendar-App/blob/master/screenshots/IMG_2035%202.jpg?raw=true" />
+<img src="https://github.com/Jjunxi/Calendar-App/blob/master/screenshots/IMG_2037%202.jpg?raw=true" />
+
   
+
 
 ## Set up
 
