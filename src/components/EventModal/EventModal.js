@@ -77,7 +77,7 @@ class EventModal extends Component {
       notification['success']({
         message: msg,
         description: 'You add an event on ' + this.props.pickDate.format("YYYY-MMMM-DD") + '.',
-        duration: 10
+        duration: 2
       });
     }
   }
