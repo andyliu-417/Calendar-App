@@ -1,5 +1,5 @@
 
-# Calendar App
+# OneClass Calendar App
 
 ## Introduction
 A single page application in React.
