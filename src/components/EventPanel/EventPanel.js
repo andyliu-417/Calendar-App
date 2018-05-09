@@ -23,7 +23,8 @@ class EventPanel extends Component {
   }
 
   filterCurrentEvents() {
-    this.state.events = [];
+    this.state.events.splice(0, this.state.events.length);
+    // this.state.events = [];
     const {date, eventList} = this.props;
     const end = date
       .endOf('month')
