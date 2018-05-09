@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
-import {Modal, Button, Input, TimePicker, Icon} from 'antd';
-import {Modal as MModal, List, Button as MButton, DatePicker, InputItem} from 'antd-mobile';
+import {Modal, Button, Input, TimePicker, Icon, notification} from 'antd';
+import {Modal as MModal, List, Button as MButton, DatePicker, InputItem, Toast} from 'antd-mobile';
 
 import {connect} from 'react-redux';
 import {addEvent, saveEvent} from '../../redux/event.redux';
@@ -26,12 +26,12 @@ class EventModal extends Component {
     onClose: PropTypes.func.isRequired
   }
 
-  handleSave = () => {
+  handleSave = (e) => {
     const {pickDate, addEvent, saveEvent, onClose} = this.props;
     const time = this.state.time;    
-
-    const datetime = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours}:${time.minutes}`, "YYYY-MM-DD HH:mm")
-                    .toObject();
+    
+    const m = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours}:${time.minutes}`, "YYYY-MM-DD HH:mm");
+    const datetime = m.toObject();
     
     addEvent(
       {
@@ -44,6 +44,21 @@ class EventModal extends Component {
     
     this.clear();
     onClose();
+
+    this.showNotification(e.target.text);
+  }
+
+  showNotification(text) {
+    if (text === "Save") {
+      Toast.success('Add Event Successfully.', 2);
+    } else {
+      notification['success']({
+        message: 'Add Event Successfully.',
+        description: 'You add an event on ' + this.props.pickDate.format("YYYY-MMMM-DD") + '.',
+        duration: 3
+      });
+    }
+    
   }
 
   handleCancel = () => {
@@ -81,8 +96,6 @@ class EventModal extends Component {
             onChange={(v) => this.setState({"name": v.target.value})}
             />
           <TimePicker
-            id="timePicker"
-            minuteStep={10}
             defaultOpenValue={moment("00:00", "HH:mm")}
             format="HH:mm"
             value={this.state.time}
