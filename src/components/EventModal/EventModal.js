@@ -27,9 +27,14 @@ class EventModal extends Component {
   }
 
   handleSave = (e) => {
+    if ((this.state.time === null) || (this.state.name === "")){
+      this.showError(e)
+      return;
+    }
+    
     const {pickDate, addEvent, saveEvent, onClose} = this.props;
     const time = this.state.time;    
-    
+  
     const m = moment(`${pickDate.year()}-${pickDate.month()}-${pickDate.date()} ${time.hours}:${time.minutes}`, "YYYY-MM-DD HH:mm");
     const datetime = m.toObject();
     
@@ -45,20 +50,32 @@ class EventModal extends Component {
     this.clear();
     onClose();
 
-    this.showNotification(e.target.text);
+    this.showNotification(e);
   }
 
-  showNotification(text) {
-    if (text === "Save") {
-      Toast.success('Add Event Successfully.', 2);
+  showNotification(e) {
+    const msg = 'Add Event Successfully.';
+    if (e.target.text === "Save") {
+      Toast.success(msg, 1);
     } else {
       notification['success']({
-        message: 'Add Event Successfully.',
+        message: msg,
         description: 'You add an event on ' + this.props.pickDate.format("YYYY-MMMM-DD") + '.',
         duration: 3
       });
     }
-    
+  }
+
+  showError(e) {
+    const msg = 'Please select time and set name!';
+    if (e.target.text === "Save") {
+      Toast.fail(msg, 1);
+    } else {
+      notification['error']({
+        message: msg,
+        duration: 2
+      });
+    }
   }
 
   handleCancel = () => {
