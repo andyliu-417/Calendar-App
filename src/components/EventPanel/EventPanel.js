@@ -5,8 +5,11 @@ import {
   Tag,
   Icon,
   Divider,
-  List
+  List,
+  Badge
 } from 'antd';
+import { WingBlank } from 'antd-mobile';
+
 import moment from 'moment';
 import config from '../../config';
 
@@ -60,7 +63,8 @@ class EventPanel extends Component {
           <div> 
             <Divider>
               <Icon type="schedule"/>&nbsp;&nbsp;
-              You have {this.state.events.length} {this.state.events.length===1?(<span>to-do</span>):(<span>to-dos</span>)} this month
+              You have &nbsp;<Badge count={this.state.events.length} style={{ backgroundColor: '#5CC3BF' }}/> &nbsp;
+              {this.state.events.length===1?(<span>to-do</span>):(<span>to-dos</span>)} this month
             </Divider>
             <List
               size="large"
@@ -91,8 +95,42 @@ class EventPanel extends Component {
   }
 
   renderMB() {
+    this.filterCurrentEvents()
+
     return (
-      <div></div>
+      <WingBlank>
+        {this.state.events.length>0 ? (
+          <div> 
+            <Divider>
+              <Icon type="schedule"/>&nbsp;&nbsp;
+              You have &nbsp;<Badge count={this.state.events.length} style={{ backgroundColor: '#5CC3BF' }}/> &nbsp;
+              {this.state.events.length===1?(<span>to-do</span>):(<span>to-dos</span>)} this month
+            </Divider>
+            <List
+              size="large"
+              bordered
+              dataSource={this.state.events}
+              renderItem={(v, i) => (
+                <List.Item>
+                  <Row>
+                    <Tag color="#5CC3BF">{i + 1}</Tag>
+                    <Icon type="clock-circle-o"/>&nbsp;
+                    <span className="event-detail">
+                      {this.showEvent(v)}
+                      </span>
+                  </Row>
+                </List.Item>
+            )}/>  
+          </div>
+        ):(
+          <div> 
+              <Divider>
+                <Icon type="schedule"/>&nbsp;&nbsp;
+                You do not have to-dos this month
+              </Divider>
+          </div>
+        )}
+      </WingBlank>
     );
   }
 
