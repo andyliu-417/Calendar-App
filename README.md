@@ -6,12 +6,12 @@
   
   Quick Links:
 
-*  [Contributing](#ar)
-*  [Building](#building)
+*  [Introduction](#intro)
+*  [Done list](#done)
 *  [Architecture](#architecture)
+*  [Set up](#setup)
 
-
-## Introduction
+## <a name="intro"></a> Introduction
 
 A single page application in React.
 
@@ -19,7 +19,7 @@ The app allows users to create events for any date and see already created event
 
   
 
-## Done list
+## <a name="done"></a> Done list
 
   
 
@@ -91,7 +91,7 @@ The app allows users to create events for any date and see already created event
   
 
 
-## Set up
+## <a name="setup"></a> Set up
 
 ```sh
 
