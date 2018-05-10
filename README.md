@@ -1,7 +1,7 @@
 
   
 
-# OneClass Calendar App
+# OneClass Calendar App 
 
   
   Quick Links:
@@ -17,7 +17,7 @@ A single page application in React.
 
 The app allows users to create events for any date and see already created events for the currently active month.
 
-  
+<a href="https://jjunxi.github.io/Calendar-App/">OneClass Calendar App</a>
 
 ## <a name="done"></a> Done list
 
@@ -25,7 +25,7 @@ The app allows users to create events for any date and see already created event
 
 - [x] Create a calendar grid for the given month and year. Make sure that every month starts from the appropriate day of the week.
 
-<img  src="https://raw.githubusercontent.com/Jjunxi/Calendar-App/master/screenshots/Screen%20Shot%202018-05-08%20at%2023.58.14.png"/>
+<img  src="https://github.com/Jjunxi/Calendar-App/blob/master/screenshots/Screen%20Shot%202018-05-08%20at%2023.58.14.png?raw=true"/>
 
   
 
@@ -37,7 +37,7 @@ The app allows users to create events for any date and see already created event
 
 - [x] Add highlighting for today's date
 
-<img  src="https://raw.githubusercontent.com/Jjunxi/Calendar-App/master/screenshots/Screen%20Shot%202018-05-08%20at%2023.58.44.png" />
+<img  src="https://raw.githubusercontent.com/Jjunxi/Calendar-App/master/screenshots/Screen%20Shot%202018-05-08%20at%2023.58.44.png?raw=true" />
 
   
 
