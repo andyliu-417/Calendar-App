@@ -17,7 +17,7 @@ A single page application in React.
 
 The app allows users to create events for any date and see already created events for the currently active month.
 
-<a href="https://jjunxi.github.io/Calendar-App/">OneClass Calendar App</a>
+<a href="https://jjunxi.github.io/Calendar-App/" target="_blank">Vist paOneClass Calendar App</a>
 
 ## <a name="done"></a> Done list
 
