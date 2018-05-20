@@ -13,7 +13,9 @@ class Body extends Component {
     onClick: PropTypes.func.isRequired
   };
 
-  filterCurrentEvents() {
+  getBusyDays() {
+    console.log("filterCurrentEvents");
+    
     const busyDays = [];
     const { date, eventList } = this.props;
     const end = date.endOf("month").format("YYYY-MM-DD");
@@ -70,7 +72,7 @@ class Body extends Component {
   }
 
   renderDay(el) {
-    const busyDays = this.filterCurrentEvents();
+    const busyDays = this.getBusyDays();
 
     return (
       <Col
