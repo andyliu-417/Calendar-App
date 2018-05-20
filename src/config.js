@@ -1,15 +1,7 @@
 export default {
-  "weekDays" : [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat"
-  ],
+  weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
 
-  "monthNames" : [
+  monthNames: [
     "January",
     "February",
     "March",
@@ -23,8 +15,8 @@ export default {
     "November",
     "December"
   ],
-  "plateform": {
+  plateform: {
     PC: "pc",
     MB: "mb"
   }
-}
+};

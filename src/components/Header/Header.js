@@ -1,50 +1,54 @@
-import React, {Component} from 'react';
-import MediaQuery from 'react-responsive';
-import {Row, Col, Button} from 'antd';
+import React, { Component } from "react";
+import MediaQuery from "react-responsive";
+import { Row, Col, Button } from "antd";
 
-import PropTypes from 'prop-types';
-import config from '../../config';
+import PropTypes from "prop-types";
+import config from "../../config";
 
 class Header extends Component {
   static propTypes = {
     date: PropTypes.object.isRequired,
     onChangeMonth: PropTypes.func.isRequired
-  }
-  
+  };
+
   lastMonth = () => {
-    let date = this.props.date.clone().subtract(1, 'months');
+    let date = this.props.date.clone().subtract(1, "months");
     this.props.onChangeMonth(date);
-  }
+  };
 
   nextMonth = () => {
-    let date = this.props.date.clone().add(1, 'months');
+    let date = this.props.date.clone().add(1, "months");
     this.props.onChangeMonth(date);
-  }
+  };
 
   renderWeekRow(mq) {
     const weekRow = config.weekDays.map((v, i) => {
-        if (i === 0) {
-          return (
-            <div key={v}>
-              <Col
-                className={"first calendar-row-week-format-"+mq}
-                style={{
+      if (i === 0) {
+        return (
+          <div key={v}>
+            <Col
+              className={"first calendar-row-week-format-" + mq}
+              style={{
                 color: "#fff"
-              }}span={3}>.</Col>
-              <Col className={"calendar-row-week-format-"+mq} span={3}>{v}</Col>
-            </div>
-          );
-        } else {
-          return (
-            <Col className={"calendar-row-week-format-"+mq} key={v} span={3}>{v}</Col>
-          );
-        }
-      })
-    return (
-      <Row>
-        {weekRow}
-      </Row>
-    );
+              }}
+              span={3}
+            >
+              .
+            </Col>
+            <Col className={"calendar-row-week-format-" + mq} span={3}>
+              {v}
+            </Col>
+          </div>
+        );
+      } else {
+        return (
+          <Col className={"calendar-row-week-format-" + mq} key={v} span={3}>
+            {v}
+          </Col>
+        );
+      }
+    });
+    return <Row>{weekRow}</Row>;
   }
 
   renderHeader(mq) {
@@ -52,20 +56,23 @@ class Header extends Component {
       <div>
         <Row className="calendar-header-row">
           <Col span={3}>
-            <Button ghost icon="double-left" className="left-btn" onClick={this.lastMonth}></Button >
+            <Button
+              ghost
+              icon="double-left"
+              className="left-btn"
+              onClick={this.lastMonth}
+            />
           </Col>
-          < Col span={18} className="calendar-title">
-            {this
-              .props
-              .date
-              .format('YYYY - MMMM')}
+          <Col span={18} className="calendar-title">
+            {this.props.date.format("YYYY - MMMM")}
           </Col>
           <Col span={3}>
             <Button
               ghost
               icon="double-right"
               className="right-btn"
-              onClick={this.nextMonth}></Button >
+              onClick={this.nextMonth}
+            />
           </Col>
         </Row>
 

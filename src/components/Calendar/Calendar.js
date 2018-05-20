@@ -1,23 +1,23 @@
-import React, {Component} from 'react';
-import MediaQuery from 'react-responsive';
-import './Calendar.css';
+import React, { Component } from "react";
+import MediaQuery from "react-responsive";
+import "./Calendar.css";
 
-import Header from '../Header/Header';
-import Body from '../Body/Body';
-import EventModal from '../EventModal/EventModal';
-import EventPanel from '../EventPanel/EventPanel';
+import Header from "../Header/Header";
+import Body from "../Body/Body";
+import EventModal from "../EventModal/EventModal";
+import EventPanel from "../EventPanel/EventPanel";
 
-import moment from 'moment';
+import moment from "moment";
 
-import {connect} from 'react-redux';
-import {getEvent} from '../../redux/event.redux';
+import { connect } from "react-redux";
+import { getEvent } from "../../redux/event.redux";
 
-import config from '../../config';
+import config from "../../config";
 
-@connect(state => state.event, {getEvent})
+@connect(state => state.event, { getEvent })
 class Calendar extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       date: null,
       pickDate: null,
@@ -25,46 +25,47 @@ class Calendar extends Component {
     };
   }
 
-  handlePick = (el) => {
-    this.setState({pickDate: el.day, showModal: true});
-  }
+  handlePick = el => {
+    this.setState({ pickDate: el.day, showModal: true });
+  };
 
   componentDidMount() {
-    this.setState({date: moment()});
-    this
-      .props
-      .getEvent();
+    this.setState({ date: moment() });
+    this.props.getEvent();
   }
 
   renderCalendar(mq) {
     return (
-      <div className={"calendar-"+mq}>
-      
-        {this.state.date != null && <Header
-          date={this.state.date}
-          onChangeMonth={(v) => {
-          this.setState({'date': v})
-        }}></Header>}
+      <div className={"calendar-" + mq}>
+        {this.state.date != null && (
+          <Header
+            date={this.state.date}
+            onChangeMonth={v => {
+              this.setState({ date: v });
+            }}
+          />
+        )}
 
-        {this.state.date != null && <Body
-          date={this.state.date}
-          onClick={(el) => {
-          this.handlePick(el)
-        }}></Body>}
+        {this.state.date != null && (
+          <Body
+            date={this.state.date}
+            onClick={el => {
+              this.handlePick(el);
+            }}
+          />
+        )}
 
-        {this.state.pickDate != null &&< EventModal
-        pickDate = {
-          this.state.pickDate
-        }
-        visible = {
-          this.state.showModal
-        }
-        onClose = {
-          () => this.setState({showModal: false})
-        } > </EventModal>}
+        {this.state.pickDate != null && (
+          <EventModal
+            pickDate={this.state.pickDate}
+            visible={this.state.showModal}
+            onClose={() => this.setState({ showModal: false })}
+          />
+        )}
 
-        {this.state.date != null && <EventPanel 
-        date={this.state.date} eventList={this.props.eventList}></EventPanel>}
+        {this.state.date != null && (
+          <EventPanel date={this.state.date} eventList={this.props.eventList} />
+        )}
       </div>
     );
   }
