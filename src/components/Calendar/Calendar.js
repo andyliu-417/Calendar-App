@@ -52,6 +52,7 @@ class Calendar extends Component {
             onClick={el => {
               this.handlePick(el);
             }}
+            eventList={this.props.eventList}
           />
         )}
 

@@ -125,6 +125,12 @@
     color: #bdbdbd;
 }
 
+.busy {
+    font-style:oblique;
+    text-decoration: underline;
+    text-decoration-color: red;
+}
+
 /* event panel */
 .event-detail {
     font-size: 1.2em;

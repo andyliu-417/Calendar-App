@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MediaQuery from "react-responsive";
-import { Row, Col } from "antd";
+import { Row, Col, Badge } from "antd";
 
 import moment from "moment";
 import PropTypes from "prop-types";
@@ -12,6 +12,25 @@ class Body extends Component {
     date: PropTypes.object.isRequired,
     onClick: PropTypes.func.isRequired
   };
+
+  filterCurrentEvents() {
+    const busyDays = [];
+    const { date, eventList } = this.props;
+    const end = date.endOf("month").format("YYYY-MM-DD");
+    const start = date.startOf("month").format("YYYY-MM-DD");
+
+    for (let i = 0; i < eventList.length; i++) {
+      const event = eventList[i];
+      const eventMoment = moment(
+        `${event.datetime.years}-${event.datetime.months + 2}-${
+          event.datetime.date
+        } ${event.datetime.hours}:${event.datetime.minutes}`,
+        "YYYY-MM-DD HH:mm"
+      );
+      busyDays.push(eventMoment.format("YYYY-MM-DD"));
+    }
+    return busyDays;
+  }
 
   getAllDays(mq) {
     const date = this.props.date;
@@ -32,6 +51,7 @@ class Body extends Component {
         className: day.isSame(moment(), "day")
           ? "current calendar-row-format-" + mq
           : "valid calendar-row-format-" + mq
+        // (busyDays.indexOf(i) > -1 ? " busy" : "")
       });
     }
 
@@ -50,10 +70,15 @@ class Body extends Component {
   }
 
   renderDay(el) {
+    const busyDays = this.filterCurrentEvents();
+
     return (
       <Col
         span={3}
-        className={el.className}
+        className={
+          el.className +
+          (busyDays.indexOf(el.day.format("YYYY-MM-DD")) > -1 ? " busy" : "")
+        }
         onClick={() => {
           this.props.onClick(el);
         }}
