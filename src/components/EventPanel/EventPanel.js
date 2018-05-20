@@ -8,21 +8,13 @@ import PropTypes from "prop-types";
 import config from "../../config";
 
 class EventPanel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      events: []
-    };
-  }
-
   static propTypes = {
     date: PropTypes.object.isRequired,
     eventList: PropTypes.array.isRequired
   };
 
   filterCurrentEvents() {
-    this.state.events.splice(0, this.state.events.length);
-    // this.state.events = [];
+    const events = [];
     const { date, eventList } = this.props;
     const end = date.endOf("month").format("YYYY-MM-DD");
     const start = date.startOf("month").format("YYYY-MM-DD");
@@ -36,10 +28,12 @@ class EventPanel extends Component {
         "YYYY-MM-DD HH:mm"
       );
       if (eventMoment.isBetween(start, end)) {
-        this.state.events.push(event);
+        events.push(event);        
       }
     }
+    return events;
   }
+
   showEvent(v) {
     return `${v.datetime.date < 10 ? "0" + v.datetime.date : v.datetime.date} 
        ${config.monthNames[v.datetime.months + 1]}
@@ -50,18 +44,18 @@ class EventPanel extends Component {
        } - 
        ${v.name}`;
   }
-  renderPC() {
+  renderPC(events) {
     return (
       <div>
-        {this.state.events.length > 0 ? (
+        {events.length > 0 ? (
           <div>
             <Divider>
               <Icon type="schedule" />&nbsp;&nbsp; You have &nbsp;<Badge
-                count={this.state.events.length}
+                count={events.length}
                 style={{ backgroundColor: "#5CC3BF" }}
               />{" "}
               &nbsp;
-              {this.state.events.length === 1 ? (
+              {events.length === 1 ? (
                 <span>to-do</span>
               ) : (
                 <span>to-dos</span>
@@ -71,7 +65,7 @@ class EventPanel extends Component {
             <List
               size="large"
               bordered
-              dataSource={this.state.events}
+              dataSource={events}
               renderItem={(v, i) => (
                 <List.Item>
                   <Row>
@@ -95,26 +89,26 @@ class EventPanel extends Component {
     );
   }
 
-  renderMB() {
+  renderMB(events) {
     return (
       <WingBlank>
         <WhiteSpace />
 
-        {this.state.events.length > 0 ? (
+        {events.length > 0 ? (
           <div>
             <Icon type="schedule" />&nbsp;&nbsp; You have &nbsp;<Badge
-              count={this.state.events.length}
+              count={events.length}
               style={{ backgroundColor: "#5CC3BF" }}
             />{" "}
             &nbsp;
-            {this.state.events.length === 1 ? (
+            {events.length === 1 ? (
               <span>to-do</span>
             ) : (
               <span>to-dos</span>
             )}{" "}
             this month
             <WhiteSpace />
-            {this.state.events.map((v, i) => (
+            {events.map((v, i) => (
               <Card key={i}>
                 <Card.Header
                   title={`${
@@ -158,15 +152,15 @@ class EventPanel extends Component {
   }
 
   render() {
-    this.filterCurrentEvents();
+    const events = this.filterCurrentEvents();
 
     return (
       <div>
         <MediaQuery query="(min-device-width: 1224px)">
-          {this.renderPC()}
+          {this.renderPC(events)}
         </MediaQuery>
         <MediaQuery query="(max-device-width: 1224px)">
-          {this.renderMB()}
+          {this.renderMB(events)}
         </MediaQuery>
       </div>
     );
