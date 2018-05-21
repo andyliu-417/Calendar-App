@@ -1,13 +1,29 @@
 import React, { Component } from "react";
 import MediaQuery from "react-responsive";
-import { Row, Tag, Icon, Divider, List, Badge } from "antd";
+import { Row, Tag, Icon, Divider, List, Badge, Button } from "antd";
 import { WingBlank, WhiteSpace, Card } from "antd-mobile";
 
 import moment from "moment";
 import PropTypes from "prop-types";
 import config from "../../config";
 
+import { connect } from "react-redux";
+import { addEvent, saveEvent } from "../../redux/event.redux";
+
+@connect(state => state.event, { addEvent, saveEvent })
 class EventPanel extends Component {
+  edit(v) {
+    console.log(v.name);
+  }
+
+  delete(v) {
+    console.log(v.name);
+  }
+
+  flag(v) {
+    console.log(v.name);
+  }
+
   static propTypes = {
     date: PropTypes.object.isRequired,
     eventList: PropTypes.array.isRequired
@@ -28,7 +44,7 @@ class EventPanel extends Component {
         "YYYY-MM-DD HH:mm"
       );
       if (eventMoment.isBetween(start, end)) {
-        events.push(event);        
+        events.push(event);
       }
     }
     return events;
@@ -44,6 +60,7 @@ class EventPanel extends Component {
        } - 
        ${v.name}`;
   }
+
   renderPC(events) {
     return (
       <div>
@@ -67,11 +84,39 @@ class EventPanel extends Component {
               bordered
               dataSource={events}
               renderItem={(v, i) => (
-                <List.Item>
+                <List.Item
+                  actions={[
+                    <Button
+                      ghost
+                      className="action-btn"
+                      icon="edit"
+                      onClick={() => this.edit(v)}
+                    />,
+                    <Button
+                      ghost
+                      className="action-btn"
+                      icon="delete"
+                      onClick={() => this.delete(v)}
+                    />,
+                    <Button
+                      ghost
+                      className="action-btn"
+                      icon="flag"
+                      onClick={() => this.flag(v)}
+                    />
+                  ]}
+                >
                   <Row>
                     <Tag color="#5CC3BF">{i + 1}</Tag>
                     <Icon type="clock-circle-o" />&nbsp;
-                    <span className="event-detail">{this.showEvent(v)}</span>
+                    <span
+                      onClick={() => {
+                        alert("asdfsd");
+                      }}
+                      className="event-detail"
+                    >
+                      {this.showEvent(v)}
+                    </span>
                   </Row>
                 </List.Item>
               )}

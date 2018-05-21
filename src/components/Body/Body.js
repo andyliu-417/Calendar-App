@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MediaQuery from "react-responsive";
-import { Row, Col, Badge } from "antd";
+import { Row, Col } from "antd";
 
 import moment from "moment";
 import PropTypes from "prop-types";
@@ -14,12 +14,8 @@ class Body extends Component {
   };
 
   getBusyDays() {
-    console.log("filterCurrentEvents");
-    
     const busyDays = [];
-    const { date, eventList } = this.props;
-    const end = date.endOf("month").format("YYYY-MM-DD");
-    const start = date.startOf("month").format("YYYY-MM-DD");
+    const { eventList } = this.props;
 
     for (let i = 0; i < eventList.length; i++) {
       const event = eventList[i];
