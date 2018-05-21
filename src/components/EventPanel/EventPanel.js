@@ -132,23 +132,33 @@ class EventPanel extends Component {
 
   renderPC(events) {
     const { datetime, time, name, showModal } = this.state;
+    let count = events.filter(e => e.completed === false).length;
 
     return (
       <div>
         {events.length > 0 ? (
           <div>
             <Divider>
-              <Icon type="schedule" />&nbsp;&nbsp; You have &nbsp;<Badge
-                count={events.length}
-                style={{ backgroundColor: "#5CC3BF" }}
-              />{" "}
-              &nbsp;
-              {events.length === 1 ? (
-                <span>to-do</span>
+              {count > 0 ? (
+                <div>
+                  <Icon type="schedule" />&nbsp;&nbsp; You have &nbsp;<Badge
+                    count={count}
+                    style={{ backgroundColor: "#5CC3BF" }}
+                  />{" "}
+                  &nbsp;
+                  {events.length === 1 ? (
+                    <span>to-do</span>
+                  ) : (
+                    <span>to-dos</span>
+                  )}{" "}
+                  this month
+                </div>
               ) : (
-                <span>to-dos</span>
-              )}{" "}
-              this month
+                <div>
+                  <Icon type="schedule" />&nbsp;&nbsp; You do not have to-dos
+                  this month
+                </div>
+              )}
             </Divider>
             <List
               size="large"
