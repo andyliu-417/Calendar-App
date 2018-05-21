@@ -10,10 +10,26 @@ import config from "../../config";
 import { connect } from "react-redux";
 import { addEvent, saveEvent } from "../../redux/event.redux";
 
+import EventModal from "../EventModal/EventModal";
+
 @connect(state => state.event, { addEvent, saveEvent })
 class EventPanel extends Component {
-  edit(v) {
-    console.log(v.name);
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pickDate: null,
+      showModal: false
+    };
+  }
+  edit(event) {
+    const eventMoment = moment(
+      `${event.datetime.years}-${event.datetime.months + 2}-${
+        event.datetime.date
+      } ${event.datetime.hours}:${event.datetime.minutes}`,
+      "YYYY-MM-DD HH:mm"
+    );
+    this.setState({ pickDate: eventMoment, showModal: true });
   }
 
   delete(v) {
@@ -121,6 +137,13 @@ class EventPanel extends Component {
                 </List.Item>
               )}
             />
+            {this.state.pickDate != null && (
+              <EventModal
+                pickDate={this.state.pickDate}
+                visible={this.state.showModal}
+                onClose={() => this.setState({ showModal: false })}
+              />
+            )}
           </div>
         ) : (
           <div>

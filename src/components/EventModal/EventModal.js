@@ -29,7 +29,7 @@ class EventModal extends Component {
   }
 
   static propTypes = {
-    pickDate: PropTypes.object.isRequired,
+    pickDate: PropTypes.object,
     visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired
   };
