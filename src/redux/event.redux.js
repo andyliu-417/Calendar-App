@@ -9,6 +9,7 @@ const SAVE_EVENT = "SAVE_EVENT";
 const GET_EVENT = "GET_EVENT";
 const DELETE_EVENT = "DELETE_EVENT";
 const TOGGLE_EVENT = "TOGGLE_EVENT";
+const UPADTE_EVENT = "UPADTE_EVENT";
 
 export function addEvent(event) {
   return { type: ADD_EVENT, payload: event };
