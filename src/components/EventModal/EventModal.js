@@ -28,22 +28,6 @@ class EventModal extends Component {
     };
   }
 
-  componentDidMount() {
-    const {name, pickDate} = this.props;
-    this.setState({
-      name, time: pickDate
-    });
-    console.log(name, pickDate);
-  }
-
-  componentWillReceiveProps() {
-    const {name, pickDate} = this.props;
-    this.setState({
-      name, time: pickDate
-    });
-    console.log(name, pickDate);
-  }
-
   static propTypes = {
     pickDate: PropTypes.object.isRequired,
     visible: PropTypes.bool.isRequired,

@@ -35,6 +35,10 @@ export function getEvent() {
   };
 }
 
+export function updateEvent(event) {
+  return { type: UPADTE_EVENT, payload: event };
+}
+
 export function event(state = initState, action) {
   switch (action.type) {
     case ADD_EVENT:
@@ -56,7 +60,7 @@ export function event(state = initState, action) {
           //   return v;
           // })
           // .filter(v => v.deleted === false)
-          .filter(v => v.id != action.payload)
+          .filter(v => v.id !== action.payload)
           .sort(compare())
       };
     case TOGGLE_EVENT:
@@ -65,6 +69,19 @@ export function event(state = initState, action) {
         eventList: state.eventList
           .map(v => {
             if (v.id === action.payload) v.completed = !v.completed;
+            return v;
+          })
+          .sort(compare())
+      };
+    case UPADTE_EVENT:
+      return {
+        ...state,
+        eventList: state.eventList
+          .map(v => {
+            if (v.id === action.payload.id) {
+              v.name = action.payload.name;
+              v.datetime = action.payload.datetime;
+            }
             return v;
           })
           .sort(compare())

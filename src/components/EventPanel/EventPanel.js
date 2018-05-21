@@ -8,21 +8,39 @@ import PropTypes from "prop-types";
 import config from "../../config";
 
 import { connect } from "react-redux";
-import { saveEvent, deleteEvent, toggleEvent } from "../../redux/event.redux";
+import {
+  saveEvent,
+  deleteEvent,
+  toggleEvent,
+  updateEvent
+} from "../../redux/event.redux";
 
-import EventModal from "../EventModal/EventModal";
+import UpdateEventModal from "../UpdateEventModal/UpdateEventModal";
 
-@connect(state => state.event, { saveEvent, deleteEvent, toggleEvent })
+@connect(state => state.event, {
+  saveEvent,
+  deleteEvent,
+  toggleEvent,
+  updateEvent
+})
 class EventPanel extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      pickDate: null,
+      datetime: null,
+      time: null,
       name: "",
-      showModal: false
+      showModal: false,
+      updateId: null
     };
   }
+
+  static propTypes = {
+    date: PropTypes.object.isRequired,
+    eventList: PropTypes.array.isRequired
+  };
+
   edit(event) {
     const eventMoment = moment(
       `${event.datetime.years}-${event.datetime.months + 2}-${
@@ -30,11 +48,39 @@ class EventPanel extends Component {
       } ${event.datetime.hours}:${event.datetime.minutes}`,
       "YYYY-MM-DD HH:mm"
     );
-    const evt = { datetime: eventMoment.toObject(), name: event.name };
-    const events = this.props.eventList;
-    console.log("index", events.indexOf(evt));
-    this.setState({ pickDate: eventMoment, name: event.name, showModal: true });
+    this.setState({
+      datetime: eventMoment,
+      time: eventMoment,
+      name: event.name,
+      showModal: true,
+      updateId: event.id
+    });
   }
+
+  handleUpdate = () => {
+    const { updateId, name, time, datetime } = this.state;
+    const { saveEvent, updateEvent } = this.props;
+
+    let m = moment(
+      `${datetime.year()}-${datetime.month()}-${datetime.date()} ${time.hours()}:${time.minutes()}`,
+      "YYYY-MM-DD HH:mm"
+    );
+    const eventDatetime = m.toObject();
+    updateEvent({
+      id: updateId,
+      name: name,
+      completed: false,
+      datetime: eventDatetime
+    });
+    this.closeModal();
+    saveEvent();
+  };
+
+  handleChange = (key, val) => {
+    this.setState({
+      [key]: val
+    });
+  };
 
   delete(event) {
     const { saveEvent, deleteEvent } = this.props;
@@ -48,9 +94,8 @@ class EventPanel extends Component {
     saveEvent();
   }
 
-  static propTypes = {
-    date: PropTypes.object.isRequired,
-    eventList: PropTypes.array.isRequired
+  closeModal = () => {
+    this.setState({ datetime: null, time: "", name: "", showModal: false });
   };
 
   filterCurrentEvents() {
@@ -86,7 +131,7 @@ class EventPanel extends Component {
   }
 
   renderPC(events) {
-    const { pickDate, name, showModal } = this.state;
+    const { datetime, time, name, showModal } = this.state;
 
     return (
       <div>
@@ -113,6 +158,7 @@ class EventPanel extends Component {
                 <List.Item
                   actions={[
                     <Button
+                      disabled={v.completed}
                       ghost
                       className="action-btn"
                       icon="edit"
@@ -135,17 +181,26 @@ class EventPanel extends Component {
                   <Row>
                     <Tag color="#5CC3BF">{i + 1}</Tag>
                     <Icon type="clock-circle-o" />&nbsp;
-                    <span className={"event-detail" + (v.completed?" completed":"")}>{this.showEvent(v)}</span>
+                    <span
+                      className={
+                        "event-detail" + (v.completed ? " completed" : "")
+                      }
+                    >
+                      {this.showEvent(v)}
+                    </span>
                   </Row>
                 </List.Item>
               )}
             />
-            {this.state.pickDate != null && (
-              <EventModal
-                pickDate={pickDate}
+            {datetime != null && (
+              <UpdateEventModal
+                datetime={datetime}
+                time={time}
                 name={name}
                 visible={showModal}
-                onClose={() => this.setState({ showModal: false })}
+                onClose={this.closeModal}
+                onChange={this.handleChange}
+                onUpdate={this.handleUpdate}
               />
             )}
           </div>
