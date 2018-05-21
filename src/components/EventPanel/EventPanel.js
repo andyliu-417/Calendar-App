@@ -8,17 +8,18 @@ import PropTypes from "prop-types";
 import config from "../../config";
 
 import { connect } from "react-redux";
-import { addEvent, saveEvent } from "../../redux/event.redux";
+import { saveEvent, deleteEvent, toggleEvent } from "../../redux/event.redux";
 
 import EventModal from "../EventModal/EventModal";
 
-@connect(state => state.event, { addEvent, saveEvent })
+@connect(state => state.event, { saveEvent, deleteEvent, toggleEvent })
 class EventPanel extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       pickDate: null,
+      name: "",
       showModal: false
     };
   }
@@ -29,15 +30,22 @@ class EventPanel extends Component {
       } ${event.datetime.hours}:${event.datetime.minutes}`,
       "YYYY-MM-DD HH:mm"
     );
-    this.setState({ pickDate: eventMoment, showModal: true });
+    const evt = { datetime: eventMoment.toObject(), name: event.name };
+    const events = this.props.eventList;
+    console.log("index", events.indexOf(evt));
+    this.setState({ pickDate: eventMoment, name: event.name, showModal: true });
   }
 
-  delete(v) {
-    console.log(v.name);
+  delete(event) {
+    const { saveEvent, deleteEvent } = this.props;
+    deleteEvent(event.id);
+    saveEvent();
   }
 
-  flag(v) {
-    console.log(v.name);
+  toggle(event) {
+    const { saveEvent, toggleEvent } = this.props;
+    toggleEvent(event.id);
+    saveEvent();
   }
 
   static propTypes = {
@@ -78,6 +86,8 @@ class EventPanel extends Component {
   }
 
   renderPC(events) {
+    const { pickDate, name, showModal } = this.state;
+
     return (
       <div>
         {events.length > 0 ? (
@@ -118,29 +128,23 @@ class EventPanel extends Component {
                       ghost
                       className="action-btn"
                       icon="flag"
-                      onClick={() => this.flag(v)}
+                      onClick={() => this.toggle(v)}
                     />
                   ]}
                 >
                   <Row>
                     <Tag color="#5CC3BF">{i + 1}</Tag>
                     <Icon type="clock-circle-o" />&nbsp;
-                    <span
-                      onClick={() => {
-                        alert("asdfsd");
-                      }}
-                      className="event-detail"
-                    >
-                      {this.showEvent(v)}
-                    </span>
+                    <span className={"event-detail" + (v.completed?" completed":"")}>{this.showEvent(v)}</span>
                   </Row>
                 </List.Item>
               )}
             />
             {this.state.pickDate != null && (
               <EventModal
-                pickDate={this.state.pickDate}
-                visible={this.state.showModal}
+                pickDate={pickDate}
+                name={name}
+                visible={showModal}
                 onClose={() => this.setState({ showModal: false })}
               />
             )}

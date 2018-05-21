@@ -138,6 +138,10 @@
 }
 
 .action-btn {
-  color: #5CC3BF;
-  border-color: #5cc3bf;  
+  color: #5cc3bf;
+  border-color: #5cc3bf;
+}
+
+.completed {
+  text-decoration: line-through;
 }

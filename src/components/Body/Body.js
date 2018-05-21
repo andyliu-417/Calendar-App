@@ -15,10 +15,13 @@ class Body extends Component {
 
   getBusyDays() {
     const busyDays = [];
-    const { eventList } = this.props;
+    const eventList = this.props.eventList;
+    const events = eventList
+      ? (eventList.filter(v => v.completed === false))
+      : eventList;
 
-    for (let i = 0; i < eventList.length; i++) {
-      const event = eventList[i];
+    for (let i = 0; i < events.length; i++) {
+      const event = events[i];
       const eventMoment = moment(
         `${event.datetime.years}-${event.datetime.months + 2}-${
           event.datetime.date

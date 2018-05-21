@@ -28,14 +28,31 @@ class EventModal extends Component {
     };
   }
 
+  componentDidMount() {
+    const {name, pickDate} = this.props;
+    this.setState({
+      name, time: pickDate
+    });
+    console.log(name, pickDate);
+  }
+
+  componentWillReceiveProps() {
+    const {name, pickDate} = this.props;
+    this.setState({
+      name, time: pickDate
+    });
+    console.log(name, pickDate);
+  }
+
   static propTypes = {
-    pickDate: PropTypes.object,
+    pickDate: PropTypes.object.isRequired,
     visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired
   };
 
   save(mq) {
     const { pickDate, addEvent, saveEvent, onClose } = this.props;
+    
     const time = this.state.time;
     let m;
     if (mq === config.plateform.MB) {
@@ -52,8 +69,11 @@ class EventModal extends Component {
     const datetime = m.toObject();
 
     addEvent({
+      id: new Date().getTime(),
       datetime,
-      name: this.state.name
+      name: this.state.name,
+      deleted: false,
+      completed: false
     });
 
     saveEvent();
