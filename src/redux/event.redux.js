@@ -50,11 +50,12 @@ export function event(state = initState, action) {
       return {
         ...state,
         eventList: state.eventList
-          .map(v => {
-            if (v.id === action.payload) v.deleted = true;
-            return v;
-          })
-          .filter(v => v.deleted === false)
+          // .map(v => {
+          //   if (v.id === action.payload) v.deleted = true;
+          //   return v;
+          // })
+          // .filter(v => v.deleted === false)
+          .filter(v => v.id != action.payload)
           .sort(compare())
       };
     case TOGGLE_EVENT:

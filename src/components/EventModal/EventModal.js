@@ -72,7 +72,6 @@ class EventModal extends Component {
       id: new Date().getTime(),
       datetime,
       name: this.state.name,
-      deleted: false,
       completed: false
     });
 
