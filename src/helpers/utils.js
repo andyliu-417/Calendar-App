@@ -15,3 +15,32 @@ export function compare() {
     return m1.isAfter(m2);
   };
 }
+
+export function filterEvents(pickDate, eventList, view) {
+  const events = [];
+  const end = pickDate.endOf("month").format("YYYY-MM-DD");
+  const start = pickDate.startOf("month").format("YYYY-MM-DD");
+console.log(pickDate, eventList);
+
+  for (let i = 0; i < eventList.length; i++) {
+    const event = eventList[i];
+    const eventMoment = moment(
+      `${event.datetime.years}-${event.datetime.months + 2}-${
+        event.datetime.date
+      } ${event.datetime.hours}:${event.datetime.minutes}`,
+      "YYYY-MM-DD HH:mm"
+    );
+    if (view === "day") {
+      console.log("day", eventMoment);
+      
+      if (eventMoment.isSame(pickDate, "day")) {
+        events.push(event);
+      }
+    } else if (view === "month") {
+      if (eventMoment.isBetween(start, end)) {
+        events.push(event);
+      }
+    }
+  }
+  return events;
+}

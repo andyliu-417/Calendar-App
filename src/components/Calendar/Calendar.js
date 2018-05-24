@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import Body from "../Body/Body";
 import EventModal from "../EventModal/EventModal";
 import EventPanel from "../EventPanel/EventPanel";
+import DayView from "../DayView/DayView";
 
 import moment from "moment";
 
@@ -21,12 +22,31 @@ class Calendar extends Component {
     this.state = {
       date: null,
       pickDate: null,
-      showModal: false
+      showModal: false,
+      showDayView: false,
+      showMonthView: true
     };
   }
 
   handlePick = el => {
     this.setState({ pickDate: el.day, showModal: true });
+  };
+
+  handleDayView = (event, el) => {
+    this.setState({
+      pickDate: el.day,
+      showDayView: true,
+      showMonthView: false
+    });
+
+    event.stopPropagation();
+  };
+
+  handleBack = () => {
+    this.setState({
+      showDayView: false,
+      showMonthView: true
+    });
   };
 
   componentDidMount() {
@@ -37,24 +57,27 @@ class Calendar extends Component {
   renderCalendar(mq) {
     return (
       <div className={"calendar-" + mq}>
-        {this.state.date != null && (
-          <Header
-            date={this.state.date}
-            onChangeMonth={v => {
-              this.setState({ date: v });
-            }}
-          />
-        )}
+        {this.state.date != null &&
+          this.state.showMonthView === true && (
+            <Header
+              date={this.state.date}
+              onChangeMonth={v => {
+                this.setState({ date: v });
+              }}
+            />
+          )}
 
-        {this.state.date != null && (
-          <Body
-            date={this.state.date}
-            onClick={el => {
-              this.handlePick(el);
-            }}
-            eventList={this.props.eventList}
-          />
-        )}
+        {this.state.date != null &&
+          this.state.showMonthView === true && (
+            <Body
+              date={this.state.date}
+              onClick={el => {
+                this.handlePick(el);
+              }}
+              eventList={this.props.eventList}
+              onDayView={this.handleDayView}
+            />
+          )}
 
         {this.state.pickDate != null && (
           <EventModal
@@ -64,9 +87,22 @@ class Calendar extends Component {
           />
         )}
 
-        {this.state.date != null && (
-          <EventPanel date={this.state.date} eventList={this.props.eventList} />
-        )}
+        {this.state.pickDate != null &&
+          this.state.showDayView === true && (
+            <DayView
+              pickDate={this.state.pickDate}
+              eventList={this.props.eventList}
+              onClick={this.handleBack}
+            />
+          )}
+
+        {this.state.date != null &&
+          this.state.showMonthView === true && (
+            <EventPanel
+              date={this.state.date}
+              eventList={this.props.eventList}
+            />
+          )}
       </div>
     );
   }

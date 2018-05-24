@@ -16,6 +16,7 @@ import {
 } from "../../redux/event.redux";
 
 import UpdateEventModal from "../UpdateEventModal/UpdateEventModal";
+import { filterEvents } from "../../helpers/utils";
 
 @connect(state => state.event, {
   saveEvent,
@@ -98,26 +99,26 @@ class EventPanel extends Component {
     this.setState({ datetime: null, time: "", name: "", showModal: false });
   };
 
-  filterCurrentEvents() {
-    const events = [];
-    const { date, eventList } = this.props;
-    const end = date.endOf("month").format("YYYY-MM-DD");
-    const start = date.startOf("month").format("YYYY-MM-DD");
+  // filterEventsofMonth() {
+  //   const events = [];
+  //   const { date, eventList } = this.props;
+  //   const end = date.endOf("month").format("YYYY-MM-DD");
+  //   const start = date.startOf("month").format("YYYY-MM-DD");
 
-    for (let i = 0; i < eventList.length; i++) {
-      const event = eventList[i];
-      const eventMoment = moment(
-        `${event.datetime.years}-${event.datetime.months + 2}-${
-          event.datetime.date
-        } ${event.datetime.hours}:${event.datetime.minutes}`,
-        "YYYY-MM-DD HH:mm"
-      );
-      if (eventMoment.isBetween(start, end)) {
-        events.push(event);
-      }
-    }
-    return events;
-  }
+  //   for (let i = 0; i < eventList.length; i++) {
+  //     const event = eventList[i];
+  //     const eventMoment = moment(
+  //       `${event.datetime.years}-${event.datetime.months + 2}-${
+  //         event.datetime.date
+  //       } ${event.datetime.hours}:${event.datetime.minutes}`,
+  //       "YYYY-MM-DD HH:mm"
+  //     );
+  //     if (eventMoment.isBetween(start, end)) {
+  //       events.push(event);
+  //     }
+  //   }
+  //   return events;
+  // }
 
   showEvent(v) {
     return `${v.datetime.date < 10 ? "0" + v.datetime.date : v.datetime.date} 
@@ -289,8 +290,10 @@ class EventPanel extends Component {
   }
 
   render() {
-    const events = this.filterCurrentEvents();
-
+    // const events = this.filterEventsofMonth();
+    const { date, eventList } = this.props;
+    const events = filterEvents(date, eventList, "month");
+    
     return (
       <div>
         <MediaQuery query="(min-device-width: 1224px)">

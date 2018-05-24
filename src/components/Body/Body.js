@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MediaQuery from "react-responsive";
-import { Row, Col } from "antd";
+import { Row, Col, Icon } from "antd";
 
 import moment from "moment";
 import PropTypes from "prop-types";
@@ -13,11 +13,17 @@ class Body extends Component {
     onClick: PropTypes.func.isRequired
   };
 
+  clickDayView(el, event) {
+    console.log(el.day);
+    
+    this.props.onDayView(event, el);
+  }
+
   getBusyDays() {
     const busyDays = [];
     const eventList = this.props.eventList;
     const events = eventList
-      ? (eventList.filter(v => v.completed === false))
+      ? eventList.filter(v => v.completed === false)
       : eventList;
 
     for (let i = 0; i < events.length; i++) {
@@ -84,7 +90,11 @@ class Body extends Component {
           this.props.onClick(el);
         }}
       >
-        {el.day.format("D")}
+        {el.day.format("D")} &nbsp;&nbsp;
+        {busyDays.indexOf(el.day.format("YYYY-MM-DD")) > -1 
+        ? (<Icon type="schedule" onClick={this.clickDayView.bind(this, el)} />) 
+        : (null)}
+        
       </Col>
     );
   }
